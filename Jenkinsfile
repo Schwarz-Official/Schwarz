@@ -10,7 +10,7 @@ pipeline {
     stage('Build Backend') {
       steps {
         dir(path: 'backend') {
-          sh 'python manage.py collectstatic --noinput'
+          sh 'python3 manage.py collectstatic --noinput'
         }
 
       }
