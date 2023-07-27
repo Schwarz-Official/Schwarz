@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/master'], [name: '*/develop'], [name: 'feature/*'], [name: 'hotfix/*']], userRemoteConfigs: [[url: 'https://github.com/Schwarz-Official/Schwarz.git', credentialsId: 'github-pat']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/master'], [name: '*/develop'], [name: 'feature/*'], [name: 'hotfix/*']], userRemoteConfigs: [[url: 'https://github.com/Schwarz-Official/Schwarz.git']]])
       }
     }
 
