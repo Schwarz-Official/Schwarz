@@ -7,7 +7,7 @@ pipeline {
       }
     }
 
-    stage('Build Django Backend') {
+    stage('Build Backend') {
       steps {
         dir(path: 'backend') {
           sh 'python3 manage.py collectstatic --noinput'
@@ -16,7 +16,7 @@ pipeline {
       }
     }
 
-    stage('Build React Frontend') {
+    stage('Build Frontend') {
       steps {
         dir(path: 'frontend') {
           sh 'npm install'
