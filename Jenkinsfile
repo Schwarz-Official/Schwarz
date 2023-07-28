@@ -17,14 +17,14 @@ pipeline {
       }
     }
 
-    stage('Build Frontend') {
-      steps {
-        dir(path: 'frontend') {
-          sh 'yarn install'
-          sh 'yarn run build'
-        }
-      }
-    }
+//     stage('Build Frontend') {
+//       steps {
+//         dir(path: 'frontend') {
+//           sh 'yarn install'
+//           sh 'yarn run build'
+//         }
+//       }
+//     }
 
     stage('Dockerize') {
       when {
