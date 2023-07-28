@@ -7,22 +7,22 @@ pipeline {
       }
     }
 
-    stage('Build Django Backend') {
+    stage('Build Backend') {
       steps {
         dir(path: 'backend') {
-          sh 'python3 manage.py collectstatic --noinput'
+//           sh 'python3 manage.py collectstatic --noinput'
+             sh 'pip install -r requirements.txt'
         }
 
       }
     }
 
-    stage('Build React Frontend') {
+    stage('Build Frontend') {
       steps {
         dir(path: 'frontend') {
-          sh 'npm install'
-          sh 'npm run build'
+          sh 'yarn install'
+          sh 'yarn run build'
         }
-
       }
     }
 
