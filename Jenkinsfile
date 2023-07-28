@@ -49,22 +49,22 @@ pipeline {
       }
     }
 
-    stage('Deploy to EKS') {
-      when {
-        branch 'master'
-      }
-      steps {
-        script {
-          withAWS(credentials: 'a4dda75a-f563-4005-bf16-560ba051f493', region: 'ap-south-1') {
-            script {
-              sh ('aws eks update-kubeconfig --name dev-ap-south-1-schwarz --region ap-south-1')
-              sh "kubectl apply -f config.yaml"
-            }
-          }
-        }
-
-      }
-    }
+//     stage('Deploy to EKS') {
+//       when {
+//         branch 'master'
+//       }
+//       steps {
+//         script {
+//           withAWS(credentials: 'a4dda75a-f563-4005-bf16-560ba051f493', region: 'ap-south-1') {
+//             script {
+//               sh ('aws eks update-kubeconfig --name dev-ap-south-1-schwarz --region ap-south-1')
+//               sh "kubectl apply -f config.yaml"
+//             }
+//           }
+//         }
+//
+//       }
+//     }
 
   }
 }
