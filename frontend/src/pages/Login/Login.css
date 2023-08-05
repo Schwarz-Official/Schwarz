@@ -155,8 +155,12 @@ input::placeholder{
     color:#aeaebff9;
     font-size: 14px;
 }
-.email-inp{
-    margin-bottom:24px;
+.email-inp,
+.password-inp {
+  /* Your regular input styles here */
+  border: 1px solid #ccc;
+  padding: 8px;
+  transition: border-color 0.3s;
 }
 
 .name {
@@ -178,7 +182,7 @@ input::placeholder{
   }
   
   .text-group input {
-    width: 10vw;
+    width: 12vw;
     border: 1px solid rgb(180, 181, 187);
     border-radius: 12px;
     padding: 10px;
@@ -259,3 +263,25 @@ input::placeholder{
     color: #090909;
     font-weight: 600;
   }
+
+  .error-border {
+    border-color: red;
+  }
+  .error {
+    color: red;
+    margin-top: 5px;
+    border: 1px solid black;
+    background-color: #f8f8f8;
+    padding: 5px;
+    border-radius: 4px;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
