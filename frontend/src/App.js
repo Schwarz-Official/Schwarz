@@ -1,8 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 // import TwofaForm from "./pages/Twofa";
-import Login from "./pages/Login/Login";
-
+import Login from "./pages/Login/Login"
 function App() {
   return (
     <div className="App">

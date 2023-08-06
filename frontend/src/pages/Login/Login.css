@@ -247,13 +247,13 @@ input::placeholder{
     border-radius: 8px;
     margin-top: 4vh;
   } */
-  .next{
+  .Sign-in-btn{
     background-color: #090909;
     color: aliceblue;
-    width: 12vw;
+    width: 24vw;
     padding: 10px 0 10px 0;
     border: 0;
-    margin-left: 25vh;
+    margin-left: 0vh;
     border-radius: 8px;
     margin-top: 4vh;
   }

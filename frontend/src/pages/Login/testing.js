@@ -80,20 +80,20 @@ const LoginForm = () => {
 
         {/* Last Name */}
         <div className="text-group">
-          <label htmlFor="lastName">Last Name</label>
+          <label htmlFor="firstName">First Name</label>
           <input
             type="text"
-            id="lastName"
-            placeholder="Enter your last name"
-            className={`${lastNameError && showErrors ? "error-border" : ""}`}
-            value={lastName}
+            id="firstName"
+            placeholder="Enter your first name"
+            className={`${firstNameError && showErrors ? "error-border" : ""}`}
+            value={firstName}
             onChange={(event) => {
               const newName = event.target.value;
-              setLastName(newName);
-              setLastNameError(newName.trim() === "" ? "Please enter your last name" : "");
+              setFirstName(newName);
+              setFirstNameError(newName.trim() === "" ? "Please enter your first name" : "");
             }}
           />
-          {lastNameError && showErrors && <p className="error">{lastNameError}</p>}
+          {firstNameError && showErrors && <p className="error">{firstNameError}</p>}
         </div>
       </div>
 

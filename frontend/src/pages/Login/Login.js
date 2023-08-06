@@ -1,7 +1,7 @@
 import React from "react";
 import "./Login.css";
 import { useState } from "react";
-import { ReactComponent as LogoIcon } from "./schwarz.svg";
+import { ReactComponent as LogoIcon } from "./Schwarz-logo.svg";
 import { ReactComponent as GoogleIcon } from "./google.svg";
 import { ReactComponent as TwitterIcon } from "./twitter.svg";
 import { ReactComponent as AppleIcon } from "./apple.svg";
@@ -96,14 +96,14 @@ const LoginForm = () => {
     <div className="container">
       <div className="log-form">
         <LogoIcon className="logoIcon" />
-        <p className="bold-text">Create an Account</p>
+        <p className="bold-text">Welcome Back</p>
         <p className="fade-text">
-          Create your Schwarz ID and unlock a world of possibilities.
+        Reconnect with your Schwarz ID for seamless access.
         </p>
 
         <div className="btn-container">
-          <button className="active-btn">Sign in</button>
-          <button className="passive-btn">Sign up</button>
+          <button className="passive-btn">Sign in</button>
+          <button className="active-btn">Sign up</button>
         </div>
 
         <div className="log-method">
@@ -121,63 +121,11 @@ const LoginForm = () => {
           </div>
         </div>
 
-        <div className="name">
-          <div className="text-group">
-            <label htmlFor="firstName">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              placeholder="Enter your first name"
-              className={`${
-                firstNameError && showErrors ? "error-border" : ""
-              }`}
-              value={firstName}
-              onChange={(event) => {
-                const newName = event.target.value;
-                setFirstName(newName);
-
-                if (newName.trim() === "") {
-                  setFirstNameError("Please enter your first name");
-                } else {
-                  setFirstNameError("");
-                }
-              }}
-            />
-            {firstNameError && showErrors && (
-              <p className="error">{firstNameError}</p>
-            )}
-          </div>
-
-          <div className="text-group">
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              placeholder="Enter your last name"
-              className={`${lastNameError && showErrors ? "error-border" : ""}`}
-              value={lastName}
-              onChange={(event) => {
-                const newName = event.target.value;
-                setLastName(newName);
-
-                if (newName.trim() === "") {
-                  setLastNameError("Please enter your last name");
-                } else {
-                  setLastNameError("");
-                }
-              }}
-            />
-            {lastNameError && showErrors && (
-              <p className="error">{lastNameError}</p>
-            )}
-          </div>
-        </div>
-
         <div className="log-detail">
           <label htmlFor="email">Email</label>
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder="Enter your username or email"
             className={`email-inp ${
               emailError && showErrors ? "error-border" : ""
             }`}
@@ -201,8 +149,8 @@ const LoginForm = () => {
           )}
         </div>
 
-        <a href="#" className="next" onClick={handleNextStepClick}>
-          Next Step
+        <a href="#" className="Sign-in-btn" onClick={handleNextStepClick}>
+        Sign In
         </a>
       </div>
       <div className="bg-vid">
