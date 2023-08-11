@@ -1,109 +1,114 @@
-import React, { useState } from "react";
-import "./Login.css";
-import { ReactComponent as LogoIcon } from "./schwarz.svg";
-import { ReactComponent as GoogleIcon } from "./google.svg";
-import { ReactComponent as TwitterIcon } from "./twitter.svg";
-import { ReactComponent as AppleIcon } from "./apple.svg";
-
-const socialButtons = [
-  // ... (unchanged)
-];
+// ... (imports and CSS imports)
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [showErrors, setShowErrors] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-
-  const handleEmailChange = (event) => {
-    const newEmail = event.target.value;
-    setEmail(newEmail);
-    setEmailError(newEmail.includes("@") ? "" : 'Email should contain "@" symbol');
-  };
-
-  const handlePasswordChange = (event) => {
-    const newPassword = event.target.value;
-    setPassword(newPassword);
-    const numCount = (newPassword.match(/\d/g) || []).length;
-    setPasswordError(
-      newPassword.length >= 8 && numCount >= 2
-        ? ""
-        : "Password should be at least 8 characters long and contain at least 2 numbers"
-    );
-  };
+  // ... (state variables and event handlers)
 
   const handleNextStepClick = () => {
-    // Validate fields and set errors
-    setFirstNameError(firstName.trim() === "" ? "Please enter your first name" : "");
-    setLastNameError(lastName.trim() === "" ? "Please enter your last name" : "");
-    setEmailError(email.includes("@") ? "" : 'Email should contain "@" symbol');
-    const numCount = (password.match(/\d/g) || []).length;
-    setPasswordError(
-      password.length >= 8 && numCount >= 2
-        ? ""
-        : "Password should be at least 8 characters long and contain at least 2 numbers"
-    );
+    setShowErrors(true); // Show errors when the button is clicked
 
-    // Set showErrors to true to display errors when the button is clicked
-    setShowErrors(true);
+    // Check for errors and set error messages
+    if (!email.includes("@")) {
+      setEmailError('Email should contain "@" symbol');
+    } else {
+      setEmailError("");
+    }
+
+    if (password.length < 8 || (password.match(/\d/g) || []).length < 2) {
+      setPasswordError(
+        "Password should be at least 8 characters long and contain at least 2 numbers"
+      );
+    } else {
+      setPasswordError("");
+    }
+
+    if (firstName.trim() === "") {
+      setFirstNameError("Please enter your first name");
+    } else {
+      setFirstNameError("");
+    }
+
+    if (lastName.trim() === "") {
+      setLastNameError("Please enter your last name");
+    } else {
+      setLastNameError("");
+    }
   };
 
   return (
     <div className="container">
-      {/* Main content */}
-      {/* ... (unchanged) */}
-      
-      {/* Fields */}
-      <div className="name">
-        {/* First Name */}
-        <div className="text-group">
+      <div className="log-form">
+        {/* ... (logo and introductory text) */}
+
+        <div className="btn-container">
+          <button className="passive-btn">Sign in</button>
+          <button className="active-btn">Sign up</button>
+        </div>
+
+        {/* ... (social login buttons) */}
+        {/* ... (divider section) */}
+
+        <div className="log-detail">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            placeholder="Enter your username or email"
+            className={`email-inp ${
+              emailError && showErrors ? "error-border" : ""
+            }`}
+            value={email}
+            onChange={handleEmailChange}
+          />
+          {emailError && showErrors && <p className="error">{emailError}</p>}
+
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            className={`password-inp ${
+              passwordError && showErrors ? "error-border" : ""
+            }`}
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          {passwordError && showErrors && (
+            <p className="error">{passwordError}</p>
+          )}
+
           <label htmlFor="firstName">First Name</label>
           <input
             type="text"
-            id="firstName"
             placeholder="Enter your first name"
-            className={`${firstNameError && showErrors ? "error-border" : ""}`}
+            className={`first-name-inp ${
+              firstNameError && showErrors ? "error-border" : ""
+            }`}
             value={firstName}
-            onChange={(event) => {
-              const newName = event.target.value;
-              setFirstName(newName);
-              setFirstNameError(newName.trim() === "" ? "Please enter your first name" : "");
-            }}
+            onChange={(e) => setFirstName(e.target.value)}
           />
-          {firstNameError && showErrors && <p className="error">{firstNameError}</p>}
-        </div>
+          {firstNameError && showErrors && (
+            <p className="error">{firstNameError}</p>
+          )}
 
-        {/* Last Name */}
-        <div className="text-group">
           <label htmlFor="lastName">Last Name</label>
           <input
             type="text"
-            id="lastName"
             placeholder="Enter your last name"
-            className={`${lastNameError && showErrors ? "error-border" : ""}`}
+            className={`last-name-inp ${
+              lastNameError && showErrors ? "error-border" : ""
+            }`}
             value={lastName}
-            onChange={(event) => {
-              const newName = event.target.value;
-              setLastName(newName);
-              setLastNameError(newName.trim() === "" ? "Please enter your last name" : "");
-            }}
+            onChange={(e) => setLastName(e.target.value)}
           />
-          {lastNameError && showErrors && <p className="error">{lastNameError}</p>}
+          {lastNameError && showErrors && (
+            <p className="error">{lastNameError}</p>
+          )}
         </div>
-      </div>
 
-      {/* Pop-up */}
-      <div className="popup-container">
-        {/* Add your pop-up content here */}
-        {/* For example, a div with class "popup" */}
-        <div className="popup">
-          {/* ... (popup content) */}
-        </div>
+        <button className="Sign-in-btn" onClick={handleNextStepClick}>
+          Sign In
+        </button>
+      </div>
+      <div className="bg-vid">
+        {/* ... (background video) */}
       </div>
     </div>
   );

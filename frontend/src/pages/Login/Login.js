@@ -98,7 +98,7 @@ const LoginForm = () => {
         <LogoIcon className="logoIcon" />
         <p className="bold-text">Welcome Back</p>
         <p className="fade-text">
-        Reconnect with your Schwarz ID for seamless access.
+          Reconnect with your Schwarz ID for seamless access.
         </p>
 
         <div className="btn-container">
@@ -150,7 +150,7 @@ const LoginForm = () => {
         </div>
 
         <a href="#" className="Sign-in-btn" onClick={handleNextStepClick}>
-        Sign In
+          Sign In
         </a>
       </div>
       <div className="bg-vid">
