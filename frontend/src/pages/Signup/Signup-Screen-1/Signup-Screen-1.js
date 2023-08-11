@@ -93,7 +93,7 @@ const Signup_Screen_1 = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container mx-auto flex">
       <div className="log-form">
         <LogoIcon className="logoIcon" />
         <p className="bold-text">Create an Account</p>
@@ -101,12 +101,12 @@ const Signup_Screen_1 = () => {
           Create your Schwarz ID and unlock a world of possibilities.
         </p>
 
-        <div className="btn-container">
-          <button className="active-btn">Sign in</button>
-          <button className="passive-btn">Sign up</button>
+        <div className="btn-container grid grid-cols-2 gap-2">
+          <button className="active-btn hover:bg-blue-100">Sign in</button>
+          <button className="passive-btn hover:bg-blue-100">Sign up</button>
         </div>
 
-        <div className="log-method">
+        <div className="log-method flex flex-col gap-4">
           {socialButtons.map((button, index) => (
             <button key={index} className={button.className}>
               <span>{button.icon}</span> <span>{button.text}</span>
@@ -114,15 +114,15 @@ const Signup_Screen_1 = () => {
           ))}
 
           {/* section of ---- or ---- */}
-          <div className="or-section">
-            <div className="hr-line"></div>
+          <div className="or-section flex items-center gap-4 mt-8">
+            <div className="hr-line border-t border-gray-300 flex-grow"></div>
             <span>or</span>
-            <div className="hr-line"></div>
+            <div className="hr-line border-t border-gray-300 flex-grow"></div>
           </div>
         </div>
 
-        <div className="name">
-          <div className="text-group">
+        <div className="name flex flex-row items-start">
+          <div className="text-group flex flex-col mr-4 mt-5">
             <label htmlFor="firstName">First Name</label>
             <input
               type="text"
@@ -173,7 +173,7 @@ const Signup_Screen_1 = () => {
           </div>
         </div>
 
-        <div className="log-detail">
+        <div className="log-detail relative top-12">
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -197,16 +197,23 @@ const Signup_Screen_1 = () => {
             onChange={handlePasswordChange}
           />
           {passwordError && showErrors && (
-            <p className="error">{passwordError}</p>
+            <p className="error border border-red-500 bg-gray-100 p-2 mt-2 rounded">
+              {passwordError}
+            </p>
           )}
         </div>
 
-        <a href="#" className="next" onClick={handleNextStepClick}>
+        <a
+          href="#"
+          className="next bg-black text-white w-32 py-2 rounded-md text-center block mx-auto mt-8"
+          onClick={handleNextStepClick}
+        >
           Next Step
         </a>
       </div>
       <div className="bg-vid">
         {/* Looping Video of Simulation from Blender */}
+        <h1>Looping Video of Simulation from Blender</h1>
         <video autoPlay loop muted>
           <source
             src="https://media.istockphoto.com/id/1251524036/video/morphing-holographic-liquid-blobs-abstract-3d-animation.mp4?s=mp4-640x640-is&k=20&c=c8oAYJoLD-_B_xjmfGGlss3j7PRi9i5KKpmaVbyy71A=.mp4"

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Signup-Screen-2.css";
+import "./Signup-Screen-3.css";
 import logoImage from "./public/logo--radiant-amethyst-no-bg-1@2x.png";
 import arrowLeftIcon from "./public/arrowleft-1.svg";
 import arrowRightIcon from "./public/arrowright-1.svg";
