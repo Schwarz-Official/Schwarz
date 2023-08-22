@@ -93,7 +93,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container font-sans">
       <div className="log-form">
         <LogoIcon className="logoIcon" />
         <p className="bold-text">Welcome Back</p>

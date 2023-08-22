@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-export default function TwofaForm() {
+const TwofaForm = () => {
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -50,8 +50,7 @@ export default function TwofaForm() {
             <div className="error">{errorMessages.message}</div>
         );
 
-    // JSX code for login form
-    const twofaForm = (
+    return(
         <div className={"parent-container m-auto grid grid-cols-2 max-md:grid-cols-1 h-screen"}>
             <div className={"tile h-full"}>
                 <div className={"flex flex-col items-center justify-center h-full"}>
@@ -99,11 +98,11 @@ export default function TwofaForm() {
                     </div>
 
                     <div className={"w-1/2 flex flex-col items-end justify-center mb-6"}>
-                        <button className={"bg-black text-white w-1/2 flex items-center justify-center font-sans rounded-xl"}>
+                        <button className={"bg-black hover:bg-black text-white w-1/2 flex items-center justify-center font-sans rounded-xl"}>
                             <p className={"p-2"}>Continue</p>
                             <svg className={"mr-2"} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.3335 8H12.6668" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M8 3.33331L12.6667 7.99998L8 12.6666" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3.3335 8H12.6668" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M8 3.33331L12.6667 7.99998L8 12.6666" stroke="white" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </button>
                     </div>
@@ -113,30 +112,7 @@ export default function TwofaForm() {
                 <h1 className="tile-marker h-full">Looping Simulation from Blender</h1>
             </div>
         </div>
-        // <div classNameName="form">
-        //   <form onSubmit={handleSubmit}>
-        //     <div classNameName="input-container">
-        //       <label className="font-sans">Username </label>
-        //       <input type="text" name="uname" required />
-        //       {renderErrorMessage("uname")}
-        //     </div>
-        //     <div classNameName="input-container">
-        //       <label>Password </label>
-        //       <input type="password" name="pass" required />
-        //       {renderErrorMessage("pass")}
-        //     </div>
-        //     <div classNameName="button-container">
-        //       <input type="submit" />
-        //     </div>
-        //   </form>
-        // </div>
-    );
-
-    return (
-        <div classNameName="app">
-            <div classNameName="login-form">
-                {isSubmitted ? <div>User is successfully logged in</div> : twofaForm}
-            </div>
-        </div>
     );
 }
+
+export default TwofaForm
