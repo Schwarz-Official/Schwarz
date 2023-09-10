@@ -12,7 +12,7 @@ pipeline {
         branch 'master'
       }
       steps {
-
+        sh "docker build -t dev-ap-south-1-code:latest ."
       }
     }
 
