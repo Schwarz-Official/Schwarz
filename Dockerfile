@@ -5,8 +5,11 @@ WORKDIR /app/frontend
 # Copy frontend source code to the container
 COPY frontend/ .
 
-# Install dependencies and build the React app
-RUN npm install
+# Copy package.json and package-lock.json (or npm-shrinkwrap.json)
+COPY frontend/package*.json ./
+
+# Install dependencies using npm ci for caching
+RUN npm ci
 RUN npm run build
 
 # Stage 2: Build Django Backend
