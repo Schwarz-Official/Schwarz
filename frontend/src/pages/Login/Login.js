@@ -1,168 +1,123 @@
-import React from "react";
-import "./Login.css";
-import { useState } from "react";
-import { ReactComponent as LogoIcon } from "./Schwarz-logo.svg";
-import { ReactComponent as GoogleIcon } from "./google.svg";
-import { ReactComponent as TwitterIcon } from "./twitter.svg";
-import { ReactComponent as AppleIcon } from "./apple.svg";
+import {socialButtons} from "../../components/SocialButton";
+import InputField from "../../components/InputField";
+import React, {useState} from "react";
+import SubmitButton from "../../components/SubmitButton";
+import {Link} from "react-router-dom";
+import {motion} from "framer-motion";
+import {ReactComponent as LogoIcon} from "../../assets/img/Schwarz-logo.svg";
+const LoginScreen = () => {
+    const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [showErrors, setShowErrors] = useState(false);
+    const handleEmailChange = (event) => {
+        const newEmail = event.target.value;
+        setEmail(newEmail);
 
-const socialButtons = [
-  {
-    icon: <GoogleIcon className="google-icon" />,
-    text: "Continue with Google",
-    className: "google-btn",
-  },
-  {
-    icon: <AppleIcon className="apple-icon" />,
-    text: "Continue with Apple",
-    className: "apple-btn",
-  },
-  {
-    icon: <TwitterIcon className="twitter-icon" />,
-    text: "Continue with Twitter",
-    className: "twitter-btn",
-  },
-];
+        if (!newEmail.includes("@")) {
+            setEmailError("Email should contain the '@' symbol");
+        } else {
+            setEmailError("");
+        }
+    };
 
-const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [showErrors, setShowErrors] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
+    const handlePasswordChange = (event) => {
+        const newPassword = event.target.value;
+        setPassword(newPassword);
 
-  const handleEmailChange = (event) => {
-    const newEmail = event.target.value;
-    setEmail(newEmail);
+        if (newPassword.length < 8 || (newPassword.match(/\d/g) || []).length < 2) {
+            setPasswordError(
+                "Password should be at least 8 characters long and contain at least 2 numbers"
+            );
+        } else {
+            setPasswordError("");
+        }
+    };
 
-    if (!newEmail.includes("@")) {
-      setEmailError('Email should contain "@" symbol');
-    } else {
-      setEmailError("");
-    }
-  };
+    const handleContinue1Click = () => {
+        setShowErrors(true);
 
-  const handlePasswordChange = (event) => {
-    const newPassword = event.target.value;
-    setPassword(newPassword);
+        // Check for errors and show them if present
+        if (!email.includes("@")) {
+            setEmailError("Email should contain the '@' symbol");
+        } else {
 
-    if (newPassword.length < 8 || (newPassword.match(/\d/g) || []).length < 2) {
-      setPasswordError(
-        "Password should be at least 8 characters long and contain at least 2 numbers"
-      );
-    } else {
-      setPasswordError("");
-    }
-  };
-  const handleNextStepClick = () => {
-    // Set showErrors to true to display errors when the button is clicked
-    setShowErrors(true);
+        }
+    };
 
-    // Check for errors and show them if present
-    if (!email.includes("@")) {
-      setEmailError('Email should contain "@" symbol');
-    }
+    return (
+        <div className={"parent-container m-auto grid grid-cols-2 max-md:grid-cols-1 h-screen font-sans"}>
+            <div className={"tile h-full"}>
+                <div className={"flex flex-col items-center justify-center h-full"}>
+                    <LogoIcon className="mb-4"/>
+                    <h1 className={"text-2xl max-md:text-xl font-bold font-sans mb-[4px]"}>Welcome Back</h1>
+                    <p className={"text-base max-md:text-sm w-3/4 font-medium font-sans text-l_grey mb-[32px] max-md:mb-[32px] text-center"}>Reconnect with your Schwarz ID for seamless access.</p>
 
-    if (password.length < 8 || (password.match(/\d/g) || []).length < 2) {
-      setPasswordError(
-        "Password should be at least 8 characters long and contain at least 2 numbers"
-      );
-    }
+                    <motion.div initial={{x: 150}} animate={{x: 0}}
+                                transition={{duration: 0.5}}>
+                        <div
+                            className="relative align-center w-[24vw] max-md:w-[60vw] bg-[#E9E9E9] mb-[32px] h-14 grid grid-cols-2 gap-2 p-1 rounded-md">
+                            <button
+                                className="text-[#636363] hover:text-black hover:shadow-inner-2xl font-bold rounded-lg hover:bg-white transition-all ease-in-out duration-250 outline-none">Sign
+                                in
+                            </button>
+                            <button className="shadow-inner-2xl font-bold rounded-lg bg-white outline-none">Sign up
+                            </button>
+                        </div>
 
-    if (!email.includes("@")) {
-      setEmailError('Email should contain "@" symbol');
-    }
+                        <div className="flex flex-col items-center justify-items-center gap-4">
+                            {socialButtons.map((button, index) => (
+                                <button key={index} className={button.className}>
+                                    <div className={"flex justify-center items-center"}>
+                                        <span>{button.icon}</span> <span>{button.text}</span>
+                                    </div>
+                                </button>
+                            ))}
 
-    if (password.length < 8 || (password.match(/\d/g) || []).length < 2) {
-      setPasswordError(
-        "Password should be at least 8 characters long and contain at least 2 numbers"
-      );
-    }
+                            {/* section of ---- or ---- */}
+                            <div className="flex items-center justify-items-center gap-4 mt-4">
+                                <hr className="border-gray-300 h-2 w-[10vw]"/>
+                                <span>or</span>
+                                <hr className="border-gray-300 h-2 w-[10vw]"/>
+                            </div>
+                        </div>
 
-    if (firstName.trim() === "") {
-      setFirstNameError("Please enter your first name");
-    }
+                        <div className="relative w-[24vw] max-md:w-[60vw] items-center justify-center">
+                            <InputField
+                                label="Email"
+                                type="email"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={handleEmailChange}
+                                error={emailError}
+                                showError={showErrors}
+                            />
 
-    if (lastName.trim() === "") {
-      setLastNameError("Please enter your last name");
-    }
-  };
+                            <InputField
+                                label="Password"
+                                type="password"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={handlePasswordChange}
+                                error={passwordError}
+                                showError={showErrors}
+                            />
+                        </div>
+                        <br/>
+                        <div className={"w-[24vw] max-md:w-[60vw]"}>
+                            <SubmitButton classname={"w-[24vw] max-md:w-[60vw]"} text="Continue"
+                                          onClick={handleContinue1Click}/>
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
 
-  return (
-    <div className="container">
-      <div className="log-form">
-        <LogoIcon className="logoIcon" />
-        <p className="bold-text">Welcome Back</p>
-        <p className="fade-text">
-          Reconnect with your Schwarz ID for seamless access.
-        </p>
-
-        <div className="btn-container">
-          <button className="passive-btn">Sign in</button>
-          <button className="active-btn">Sign up</button>
+            <div className="bg-l_light_grey h-full block max-md:hidden">
+                <h1 className="tile-marker h-full">Looping Simulation from Blender</h1>
+            </div>
         </div>
+    )
+}
 
-        <div className="log-method">
-          {socialButtons.map((button, index) => (
-            <button key={index} className={button.className}>
-              <span>{button.icon}</span> <span>{button.text}</span>
-            </button>
-          ))}
-
-          {/* section of ---- or ---- */}
-          <div className="or-section">
-            <div className="hr-line"></div>
-            <span>or</span>
-            <div className="hr-line"></div>
-          </div>
-        </div>
-
-        <div className="log-detail">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            placeholder="Enter your username or email"
-            className={`email-inp ${
-              emailError && showErrors ? "error-border" : ""
-            }`}
-            value={email}
-            onChange={handleEmailChange}
-          />
-          {emailError && showErrors && <p className="error">{emailError}</p>}
-
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            className={`password-inp ${
-              passwordError && showErrors ? "error-border" : ""
-            }`}
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          {passwordError && showErrors && (
-            <p className="error">{passwordError}</p>
-          )}
-        </div>
-
-        <a href="#" className="Sign-in-btn" onClick={handleNextStepClick}>
-          Sign In
-        </a>
-      </div>
-      <div className="bg-vid">
-        {/* Looping Video of Simulation from Blender */}
-        <video autoPlay loop muted>
-          <source
-            src="https://media.istockphoto.com/id/1251524036/video/morphing-holographic-liquid-blobs-abstract-3d-animation.mp4?s=mp4-640x640-is&k=20&c=c8oAYJoLD-_B_xjmfGGlss3j7PRi9i5KKpmaVbyy71A=.mp4"
-            type="video/mp4"
-          />
-        </video>
-      </div>
-    </div>
-  );
-};
-export default LoginForm;
+export default LoginScreen;

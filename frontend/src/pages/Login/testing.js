@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { ReactComponent as LogoIcon } from "./schwarz.svg";
-import { ReactComponent as GoogleIcon } from "./google.svg";
-import { ReactComponent as TwitterIcon } from "./twitter.svg";
-import { ReactComponent as AppleIcon } from "./apple.svg";
+import { ReactComponent as GoogleIcon } from "../../assets/img/google.svg";
+import { ReactComponent as TwitterIcon } from "../../assets/img/twitter.svg";
+import { ReactComponent as AppleIcon } from "../../assets/img/apple.svg";
 
 const socialButtons = [
   // ... (unchanged)
