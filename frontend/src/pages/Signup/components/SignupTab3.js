@@ -41,7 +41,7 @@ const SignupTab3 = ({onPrevious, onContinue}) => {
                     onChange={(event) => setGender(event.target.value)}
                     error={genderError}
                     showError={showErrors}
-                    options={["Male", "Female", "Prefer not to say"]}
+                    options={["Man", "Woman", "Transgender", "Non-binary/non-conforming", "Prefer not to respond"]}
                     defaultOption={"Male"}
                 />
 

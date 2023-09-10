@@ -7,31 +7,12 @@ pipeline {
       }
     }
 
-    stage('Build Backend') {
-      steps {
-        dir(path: 'backend') {
-//           sh 'python3 manage.py collectstatic --noinput'
-             sh 'pip install -r requirements.txt'
-        }
-
-      }
-    }
-
-//     stage('Build Frontend') {
-//       steps {
-//         dir(path: 'frontend') {
-//           sh 'yarn install'
-//           sh 'yarn run build'
-//         }
-//       }
-//     }
-
     stage('Dockerize') {
       when {
         branch 'master'
       }
       steps {
-        sh 'docker build -t dev-ap-south-1-code .'
+
       }
     }
 
