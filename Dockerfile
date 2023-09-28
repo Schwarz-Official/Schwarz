@@ -8,6 +8,9 @@ COPY frontend/ .
 # Copy package.json and package-lock.json (or npm-shrinkwrap.json)
 COPY frontend/package*.json ./
 
+# Install Bun globally (you may need to adjust the installation command)
+RUN npm install -g bun
+
 # Install dependencies using npm ci for caching
 RUN bun install
 RUN bun build
