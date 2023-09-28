@@ -9,8 +9,8 @@ COPY frontend/ .
 COPY frontend/package*.json ./
 
 # Install dependencies using npm ci for caching
-RUN npm ci
-RUN npm run build
+RUN bun install
+RUN bun build
 
 # Stage 2: Build Django Backend
 FROM python:3.11 as backend-builder
