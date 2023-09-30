@@ -1,4 +1,4 @@
-# Schwarz Hacktoberfest 2023
+# Contributing to Schwarz
 
 Thank you for your interest in contributing to Schwarz! To get started, please follow these steps to prepare your GitHub repository for contributing:
 
