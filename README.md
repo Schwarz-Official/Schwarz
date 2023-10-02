@@ -1,4 +1,4 @@
-# Schwarz: Your Premier Hub for 3D Artists
+# Schwarz: The all-in-one Community for 3D Artists
 
 Welcome to Schwarz, your ultimate destination in the vast universe of 3D artistry! Whether you're a seasoned professional pushing the boundaries of visual storytelling or an aspiring enthusiast sculpting your dreams, Schwarz is your all-in-one community designed to elevate your craft.
 
