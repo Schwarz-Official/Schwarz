@@ -4,13 +4,27 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 #  Custom User Manager
 class UserManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, age, gender, address, preferred_lang, company, job_title,
-                    industry, experience, password=None, password2=None):
+    def create_user(
+        self,
+        email,
+        first_name,
+        last_name,
+        age,
+        gender,
+        address,
+        preferred_lang,
+        company,
+        job_title,
+        industry,
+        experience,
+        password=None,
+        password2=None,
+    ):
         """
-      Creates and saves a User with the given email, name, tc and password.
-      """
+        Creates and saves a User with the given email, name, tc and password.
+        """
         if not email:
-            raise ValueError('User must have an email address')
+            raise ValueError("User must have an email address")
 
         user = self.model(
             email=self.normalize_email(email),
@@ -23,18 +37,31 @@ class UserManager(BaseUserManager):
             company=company,
             job_title=job_title,
             industry=industry,
-            experience=experience
+            experience=experience,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, age, gender, address, preferred_lang, company, job_title,
-                    industry, experience, password=None):
+    def create_superuser(
+        self,
+        email,
+        first_name,
+        last_name,
+        age,
+        gender,
+        address,
+        preferred_lang,
+        company,
+        job_title,
+        industry,
+        experience,
+        password=None,
+    ):
         """
-      Creates and saves a superuser with the given email, name, tc and password.
-      """
+        Creates and saves a superuser with the given email, name, tc and password.
+        """
         user = self.create_user(
             email,
             password=password,
@@ -47,7 +74,7 @@ class UserManager(BaseUserManager):
             company=company,
             job_title=job_title,
             industry=industry,
-            experience=experience
+            experience=experience,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -57,7 +84,7 @@ class UserManager(BaseUserManager):
 #  Custom User Model
 class User(AbstractBaseUser):
     email = models.EmailField(
-        verbose_name='Email',
+        verbose_name="Email",
         max_length=255,
         unique=True,
     )
@@ -78,9 +105,19 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'age', 'gender', 'address', 'preferred_lang', 'company',
-                       'job_title', 'industry', 'experience']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = [
+        "first_name",
+        "last_name",
+        "age",
+        "gender",
+        "address",
+        "preferred_lang",
+        "company",
+        "job_title",
+        "industry",
+        "experience",
+    ]
 
     def __str__(self):
         return self.email
