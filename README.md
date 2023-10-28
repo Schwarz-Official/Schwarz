@@ -33,4 +33,4 @@ Calling all designers! Your creativity can enhance our user experience. Explore 
 
 At Schwarz, we treasure a community where respect, inclusivity, and creativity thrive. Please familiarize yourself with our [Code of Conduct](CODE_OF_CONDUCT.md) to understand the standards of behavior we uphold.
 
-Join Schwarz today and become part of a community where your artistic dreams take flight. Let's sculpt, render, and animate the extraordinary together!
+Join Schwarz today and become part of a community where your artistic dreams take flight. Let's sculpt, render, and animate the extraordinary together!!
