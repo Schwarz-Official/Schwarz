@@ -27,7 +27,7 @@ We invite you to actively contribute and shape the Schwarz community:
 Are you a developer? Dive into our [Contributing Guidelines](CONTRIBUTING.md) to learn how your coding expertise can enhance Schwarz's features and functionalities.
 
 ### **Design Contributions**
-Calling all designers! Your creativity can enhance our user experience. Explore our Figma design file (link in the Figma channel) and share your insights and designs to elevate Schwarz's aesthetics.
+Attention, designers! Your creativity has the potential to greatly improve our user experience. Please take the time to delve into our Figma design file (accessible through the Figma channel) and kindly share your valuable insights and designs to enhance Schwarz's aesthetics.
 
 ## Upholding Our Community Values
 
