@@ -8,7 +8,7 @@ Welcome to Schwarz, your ultimate destination in the vast universe of 3D artistr
 Dive into our vibrant forums, where creativity knows no bounds. Connect with fellow artists, share your latest projects, seek feedback, and engage in lively discussions. Schwarz's forums are the heart of our community, where ideas flourish and friendships are forged.
 
 ### **Dedicated Marketplace**
-Discover a world of 3D assets in our dedicated marketplace. From meticulously crafted models to awe-inspiring textures and animations, Schwarz's marketplace is your treasure trove. Browse, purchase, or showcase your creations to a global audience of art enthusiasts and professionals.
+Explore a realm of 3D assets within our exclusive marketplace. Whether you're seeking intricately crafted models, breathtaking textures, or captivating animations, Schwarz's marketplace offers a wealth of options. Delve into the selection, make purchases, or present your creations to a global audience of art connoisseurs and industry experts.
 
 ### **Extensive Customization**
 Tailor your Schwarz experience to reflect your unique style. Personalize your profile, curate your content feed, and set preferences to ensure you're always in the midst of the creative buzz that resonates with your artistic vision.
