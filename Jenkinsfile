@@ -30,6 +30,27 @@ pipeline {
       }
     }
 
+    stage('Qodana') {
+        environment {
+            QODANA_TOKEN = credentials('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmdhbml6YXRpb24iOiJBNm1yYSIsInByb2plY3QiOiJ6RWpiTCIsInRva2VuIjoiQURFOFoifQ.AzTHJMPmhHa-QF1Z4Wo5QGvPNIv-BazlhWOWuGwu7y0')
+        }
+        agent {
+            docker {
+                args '''
+                    -v "${WORKSPACE}":/data/project
+                    --entrypoint=""
+                    '''
+                image 'jetbrains/qodana-python'
+            }
+        }
+        when {
+            branch 'master'
+        }
+        steps {
+            sh '''qodana'''
+        }
+    }
+
 //     stage('Deploy to EKS') {
 //       when {
 //         branch 'master'

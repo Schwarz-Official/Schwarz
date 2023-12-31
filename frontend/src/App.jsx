@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import Otpscreen from "./pages/TwoFa/Otpscreen";
 import TwofaForm from "./pages/TwoFa/TwofaOptions";
@@ -6,7 +7,6 @@ import LoginForm from "./pages/Login/Login";
 import SignupScreen from "./pages/Signup/SignupScreen";
 import SignupTab3 from "./pages/Signup/components/SignupTab3";
 import styles from './MyStyle.css';
-
 
 function App() {
   return (
@@ -22,21 +22,21 @@ function App() {
             </Routes>
         </Router>
         
-        <div class="container">
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div
-  style={{
-    display: 'flex',
-    justifyContent: 'center',  // Horizontally center
-    alignItems: 'flex-start',   // Align to the top       // 100% of the viewport height
-  }}
->
-  <h2 style={{ padding: '10px', marginTop: '20px', fontFamily: 'Arial, sans-serif'}}>Loading...</h2>
-</div>        
-    </div>
+{/*        <div class="container">*/}
+{/*        <div class="box"></div>*/}
+{/*        <div class="box"></div>*/}
+{/*        <div class="box"></div>*/}
+{/*        <div class="box"></div>*/}
+{/*        <div*/}
+{/*  style={{*/}
+{/*    display: 'flex',*/}
+{/*    justifyContent: 'center',  // Horizontally center*/}
+{/*    alignItems: 'flex-start',   // Align to the top       // 100% of the viewport height*/}
+{/*  }}*/}
+{/*>*/}
+{/*  <h2 style={{ padding: '10px', marginTop: '20px', fontFamily: 'Arial, sans-serif'}}>Loading...</h2>*/}
+{/*</div>        */}
+{/*    </div>*/}
     </div>
   );
 }
