@@ -14,11 +14,14 @@ function App() {
         <Router>
             <Routes>
                 <Route exact path="/login" element={<LoginForm />} />
-                <Route exact path="/auth" element={<TwofaForm />} >
-                </Route>
+                <Route exact path="/signup" element={<SignupScreen />} />
+                <Route exact path="/auth" element={<TwofaForm />} />
                 <Route exact path="/google" element={<Otpscreen />} />
-                <Route exact path="/register" element={<SignupScreen />} />
-                <Route exact path="/register1" element={<SignupTab3 />} />
+                {/*<Route exact path='/facebook' component={Facebook} />*/}
+                {/*<Route exact path='/reset-password' component={ResetPassword} />*/}
+                {/*<Route exact path='/password/reset/confirm/:uid/:token' component={ResetPasswordConfirm} />*/}
+                {/*<Route exact path='/activate/:uid/:token' component={Activate} />*/}
+                {/*<Route exact path="/register1" element={<SignupTab3 />} />*/}
             </Routes>
         </Router>
         

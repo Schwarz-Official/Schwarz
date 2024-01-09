@@ -42,31 +42,6 @@ const SignupScreen = () => {
         setShowSignupTab3(true)
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const data = new FormData(e.currentTarget);
-        const actualData = {
-            name: data.get('name'),
-            email: data.get('email'),
-            aadhaar: data.get('aadhaar'),
-            mobile: data.get('mobile'),
-            password: data.get('password'),
-            password2: data.get('password2'),
-        }
-        const res = await registerUser(actualData)
-        if (res.error) {
-            console.log(typeof (res.error.data.errors))
-            console.log(res.error.data.errors)
-            setServerError(res.error.data.errors)
-        }
-        if (res.data) {
-            console.log(typeof (res.data))
-            console.log(res.data)
-            storeToken(res.data.token)
-            navigate('/dashboard')
-        }
-    }
-
     return (
         <div className={"parent-container m-auto grid grid-cols-2 max-md:grid-cols-1 h-screen font-sans"}>
             <div className={"tile h-full"}>

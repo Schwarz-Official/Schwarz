@@ -18,7 +18,6 @@ class UserManager(BaseUserManager):
         industry,
         experience,
         password=None,
-        password2=None,
     ):
         """
         Creates and saves a User with the given email, name, tc and password.

@@ -2,15 +2,19 @@ import {socialButtons} from "../../components/SocialButton";
 import InputField from "../../components/InputField";
 import React, {useState} from "react";
 import SubmitButton from "../../components/SubmitButton";
-import {Link} from "react-router-dom";
 import {motion} from "framer-motion";
 import {ReactComponent as LogoIcon} from "../../assets/img/Schwarz-logo.svg";
-const LoginScreen = () => {
+import {useNavigate} from "react-router-dom";
+import {login} from "../../services/actions/auth";
+import {connect} from "react-redux";
+const LoginScreen = ({ login, isAuthenticated }) => {
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [showErrors, setShowErrors] = useState(false);
+    const navigate = useNavigate();
+
     const handleEmailChange = (event) => {
         const newEmail = event.target.value;
         setEmail(newEmail);
@@ -35,7 +39,9 @@ const LoginScreen = () => {
         }
     };
 
-    const handleContinue1Click = () => {
+    const handleContinue1Click = e => {
+        e.preventDefault();
+
         setShowErrors(true);
 
         // Check for errors and show them if present
@@ -44,12 +50,42 @@ const LoginScreen = () => {
         } else {
 
         }
+
+        login(email, password);
     };
+
+    if (isAuthenticated) {
+        return <Redirect to='/' />
+    }
+
+    // const continueWithGoogle = async () => {
+    //     try {
+    //         const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`)
+    //
+    //         window.location.replace(res.data.authorization_url);
+    //     } catch (err) {
+    //
+    //     }
+    // };
+    //
+    // const continueWithFacebook = async () => {
+    //     try {
+    //         const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/o/facebook/?redirect_uri=${process.env.REACT_APP_API_URL}/facebook`)
+    //
+    //         window.location.replace(res.data.authorization_url);
+    //     } catch (err) {
+    //
+    //     }
+    // };
+
+    if (isAuthenticated) {
+        return navigate('/');
+    }
 
     return (
         <div className={"parent-container m-auto grid grid-cols-2 max-md:grid-cols-1 h-screen font-sans"}>
             <div className={"tile h-full"}>
-                <div className={"flex flex-col items-center justify-center h-full"}>
+                <form className={"flex flex-col items-center justify-center h-full"} onSubmit={e => handleContinue1Click(e)}>
                     <LogoIcon className="mb-4"/>
                     <h1 className={"text-2xl max-md:text-xl font-bold font-sans mb-[4px]"}>Welcome Back</h1>
                     <p className={"text-base max-md:text-sm w-3/4 font-medium font-sans text-l_grey mb-[32px] max-md:mb-[32px] text-center"}>Reconnect with your Schwarz ID for seamless access.</p>
@@ -110,7 +146,7 @@ const LoginScreen = () => {
                                           onClick={handleContinue1Click}/>
                         </div>
                     </motion.div>
-                </div>
+                </form>
             </div>
 
             <div className="bg-l_light_grey h-full block max-md:hidden">
@@ -120,4 +156,8 @@ const LoginScreen = () => {
     )
 }
 
-export default LoginScreen;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(LoginScreen);
