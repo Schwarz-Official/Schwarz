@@ -4,9 +4,11 @@ import Otpscreen from "./pages/TwoFa/Otpscreen";
 import TwofaForm from "./pages/TwoFa/TwofaOptions";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginForm from "./pages/Login/Login";
+import SettingsPage from "./pages/profile/settings";
 import SignupScreen from "./pages/Signup/SignupScreen";
 import SignupTab3 from "./pages/Signup/components/SignupTab3";
 import styles from './MyStyle.css';
+import Profile from './pages/profile/Profile';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
                 <Route exact path="/signup" element={<SignupScreen />} />
                 <Route exact path="/auth" element={<TwofaForm />} />
                 <Route exact path="/google" element={<Otpscreen />} />
+                <Route exact path="/settings" element={<SettingsPage />} />
+                <Route exact path="/profile" element={<Profile/>} />
                 {/*<Route exact path='/facebook' component={Facebook} />*/}
                 {/*<Route exact path='/reset-password' component={ResetPassword} />*/}
                 {/*<Route exact path='/password/reset/confirm/:uid/:token' component={ResetPasswordConfirm} />*/}

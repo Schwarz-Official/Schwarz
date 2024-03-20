@@ -15,11 +15,6 @@ const OtpInput = () => {
     };
 
     return (
-        // <>
-        //     <Header title="Building OTP box using Hooks" />
-
-        //     <ExternalInfo page="otpBox" />
-
             <div className="row">
                 <div className="col text-center">
 
