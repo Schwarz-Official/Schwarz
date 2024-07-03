@@ -15,6 +15,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
+    "react-loading-skeleton": "^3.4.0",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.15.0",
     "react-select": "^5.8.0",
@@ -27,9 +28,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "rd /s /q ..\\backend\\build && tsc && vite build && xcopy build ..\\backend\\build /e /i /y",
     "serve": "vite preview",
-    "test": "react-scripts test",
+    "test:ui": "vitest --ui --api 1337",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -52,9 +53,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
+    "@vitest/ui": "^1.4.0",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^1.4.0"
   }
 }

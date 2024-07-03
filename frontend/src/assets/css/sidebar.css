@@ -1,0 +1,12 @@
+.sidebar.open {
+    right: 0;
+}
+
+.overlay {
+    visibility: hidden;
+}
+
+.overlay.open {
+    opacity: 1;
+    visibility: visible;
+}

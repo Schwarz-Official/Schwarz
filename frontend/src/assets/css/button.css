@@ -1,0 +1,34 @@
+:root {
+    --btn-shadow: 1px 1px 25px 10px rgba(255, 255, 255, 0.5);
+    --shine-degree: 120deg;
+    --shine-color: rgba(255, 255, 255, 0.2);
+    --shine-effect: linear-gradient(var(--shine-degree), transparent, var(--shine-color), transparent);
+    --shine-transition: all 0.65s ease-in-out;
+}
+.btn {
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+.btn:not(:last-child) {
+    margin-bottom: 3rem;
+}
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--shine-effect);
+}
+.btn-hover::before {
+    left: -100%;
+    transition: var(--shine-transition);
+}
+.btn-hover:hover {
+    box-shadow: var(--btn-shadow);
+    background-color: #232323;
+}
+.btn-hover:hover::before {
+    left: 100%;
+}

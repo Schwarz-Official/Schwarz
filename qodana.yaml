@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------#
 version: "1.0"
 
-#Specify inspection profile for code analysis
+#Specify inspection Profile for code analysis
 profile:
   name: qodana.starter
 

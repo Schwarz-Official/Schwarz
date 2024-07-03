@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {motion} from "framer-motion"
 import {ReactComponent as LogoIcon} from "../../assets/img/Schwarz-logo.svg";
@@ -6,17 +6,38 @@ import SignupTab1 from "./components/SignupTab1";
 import SignupTab2 from "./components/SignupTab2";
 import SignupTab3 from "./components/SignupTab3";
 import SignupTab4 from "./components/SignupTab4";
-import {useRegisterUserMutation} from "../../services/userAuthApi";
+import {signup} from "../../services/actions/auth";
+import {connect} from "react-redux";
+import {Button} from "../../components/Button";
+import {Heading} from "../../components/Heading";
+import {SubHeading} from "../../components/SubHeading";
 
-const SignupScreen = () => {
+const SignupScreen = ({signup, isAuthenticated}) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [re_password, setRePassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [date, setDate] = useState("");
+    const [gender, setGender] = useState("Man");
+    const [address, setAddress] = useState("");
+    const [preferred_lang, setLanguage] = useState("English");
+    const [company, setCompany] = useState("");
+    const [job_title, setJobTitle] = useState("");
+    const [industry, setIndustry] = useState("");
+    const [experience, setExperience] = useState("");
+
     const [showSignupTab1, setShowSignupTab1] = useState(true);
     const [showSignupTab2, setShowSignupTab2] = useState(false);
     const [showSignupTab3, setShowSignupTab3] = useState(false);
     const [showSignupTab4, setShowSignupTab4] = useState(false);
 
-    const [server_error, setServerError] = useState({})
+    const [accountCreated, setAccountCreated] = useState(false);
     const navigate = useNavigate();
-    const [registerUser, {isLoading}] = useRegisterUserMutation()
+
+    useEffect(() => {
+        document.title = "Create a Schwarz ID | Schwarz"
+    }, [])
 
     const handleTransition1 = () => {
         setShowSignupTab1(false);
@@ -42,102 +63,152 @@ const SignupScreen = () => {
         setShowSignupTab3(true)
     }
 
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        if (password === re_password) {
+            signup(email, firstName, lastName, date, gender, address, preferred_lang, company, job_title, industry, experience, password, re_password);
+            setAccountCreated(true);
+        }
+    };
+
+    if (isAuthenticated) {
+        return navigate('/');
+    }
+    if (accountCreated) {
+        return navigate('/login');
+    }
+
     return (
-        <div className={"parent-container m-auto grid grid-cols-2 max-md:grid-cols-1 h-screen font-sans"}>
+        <div className={"parent-container m-auto grid grid-cols-2 max-md:grid-cols-1 h-screen"}>
             <div className={"tile h-full"}>
-                <div className={"flex flex-col items-center justify-center h-full"}>
+                <form className={"flex flex-col items-center justify-center h-full"}>
                     <LogoIcon className="mb-4"/>
                     {(showSignupTab1 || showSignupTab2) &&
-                        <motion.div initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
-                                    transition={{delay: 0.5, duration: 0.5}}>
-                            <h1 className={"text-2xl max-md:text-xl font-bold font-sans mb-[4px]"}>Create an
-                                Account</h1></motion.div>}
+                        <Heading initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
+                                 transition={{delay: 0.5, duration: 0.5}} text={"Create an Account"} classname={"text-2xl max-md:text-xl text-center"}/>
+                    }
                     {(showSignupTab1 || showSignupTab2) &&
-                        <motion.div className={"w-3/4"} initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
-                                    transition={{delay: 0.8, duration: 0.5}}>
-                            <p className={"text-base max-md:text-sm font-medium font-sans text-l_grey mb-[32px] max-md:mb-[32px] text-center"}>Create
-                                your <Link to={""} className={"text-blue"}>Schwarz ID</Link> and unlock a world of
-                                possibilities.</p></motion.div>}
-
-                    {/*<motion.div animate={showSignupTab1 ? {x: 0} : {x: -1000}}*/}
-                    {/*            transition={{duration: 0.5}}>*/}
-                    {/*    {showSignupTab1 &&*/}
-                    {/*        <motion.div initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}*/}
-                    {/*                    transition={{delay: 0.5, duration: 0.5}}>*/}
-                    {/*            <h1 className={"text-2xl max-md:text-xl font-bold font-sans mb-[4px]"}>Create an*/}
-                    {/*                Account</h1>*/}
-                    {/*            <p className={"text-base max-md:text-sm w-3/4 font-medium font-sans text-l_grey mb-[32px] max-md:mb-[32px] text-center"}>*/}
-                    {/*                Create your <Link to={""} className={"text-blue"}>Schwarz ID</Link> and unlock a*/}
-                    {/*                world of possibilities.*/}
-                    {/*            </p>*/}
-                    {/*        </motion.div>*/}
-                    {/*    }*/}
-                    {/*</motion.div>*/}
+                        <SubHeading classname={"text-neutral-400 mx-4 text-center"} initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
+                                    transition={{delay: 0.8, duration: 0.5}} text={<>
+                            Create your <Link to="" className="text-blue">Schwarz ID</Link> and unlock a world of
+                            possibilities.
+                        </>} />
+                    }
 
                     {(showSignupTab3) &&
-                        <motion.div initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
-                                    transition={{delay: 0.5, duration: 0.5}}>
-                            <h1 className={"text-2xl max-md:text-xl font-bold font-sans mb-[4px]"}>Personal
-                                Information</h1></motion.div>}
+                        <Heading initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
+                                    transition={{delay: 0.5, duration: 0.5}} text={"Personal Information"} classname={"text-2xl max-md:text-xl text-center"}/>
+                    }
                     {(showSignupTab3) &&
-                        <motion.div className={"w-3/4"} initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
-                                    transition={{delay: 0.8, duration: 0.5}}>
-                            <p className={"text-base max-md:text-sm font-medium font-sans text-l_grey mb-[32px] max-md:mb-[32px] text-center"}>Help
-                                us personalize your experience and enhance our services
-                                by providing some additional personal information</p></motion.div>}
+                        <SubHeading classname={"text-neutral-400 mx-4 text-center"} initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
+                                    transition={{delay: 0.8, duration: 0.5}} text={"Help us personalize your experience " +
+                            "and enhance our services by providing some additional personal information"}/>
+                    }
 
                     {(showSignupTab4) &&
-                        <motion.div initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
-                                    transition={{delay: 0.5, duration: 0.5}}>
-                            <h1 className={"text-2xl max-md:text-xl font-bold font-sans mb-[4px]"}>Work Information</h1>
-                        </motion.div>}
+                        <Heading initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
+                                    transition={{delay: 0.5, duration: 0.5}} text={"Work Information"} classname={"text-2xl max-md:text-xl text-center"}/>
+                    }
                     {(showSignupTab4) &&
-                        <motion.div className={"w-3/4"} initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
-                                    transition={{delay: 0.8, duration: 0.5}}>
-                            <p className={"text-base max-md:text-sm font-medium font-sans text-l_grey mb-[32px] max-md:mb-[32px] text-center"}>Help
-                                us personalize your experience and enhance our services by
-                                providing some additional work information</p></motion.div>}
+                        <SubHeading classname={"text-neutral-400 mx-4 text-center"} initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
+                                    transition={{delay: 0.8, duration: 0.5}} text={"Help us personalize your experience and enhance our services by providing some additional work information"} />
+                    }
 
-                    <motion.div initial={{x: 150}} animate={showSignupTab1 ? {x: 0} : {x: -1000}}
-                                transition={{duration: 0.5}}>
-                        {showSignupTab1 && <SignupTab1 onContinue={handleTransition1}/>}
+                    <motion.div
+                        initial={{opacity: 0, x: 150}}
+                        animate={showSignupTab1 ? {opacity: 1, x: 0} : {opacity: 0, x: -1000}}
+                        transition={{duration: 0.5}}>
+                        {showSignupTab1 && <SignupTab1
+                            onContinue={handleTransition1}
+                            email={email}
+                            setEmail={setEmail}
+                        />}
                     </motion.div>
 
                     <motion.div
-                        initial={{x: 1000}} // Start from the right (out of view)
-                        animate={showSignupTab2 ? {x: 0} : {x: 150}} // Slide in from the right
+                        initial={{opacity: 0, x: 1000}}
+                        animate={showSignupTab2 ? {opacity: 1, x: 0} : {opacity: 0, x: 150}}
                         transition={{duration: 0.5}}
                     >
-                        {showSignupTab2 &&
-                            <SignupTab2 onContinue={handleTransition2}/>} {/* Show SignupTab2 when the state is true */}
+                        {showSignupTab2 && <SignupTab2
+                            onContinue={handleTransition2}
+                            email={email}
+                            password={password}
+                            setPassword={setPassword}
+                            re_password={re_password}
+                            setRePassword={setRePassword}
+                            firstName={firstName}
+                            setFirstName={setFirstName}
+                            lastName={lastName}
+                            setLastName={setLastName}
+                        />}
                     </motion.div>
 
                     <motion.div
-                        initial={{x: 1000}} // Start from the right (out of view)
-                        animate={showSignupTab3 ? {x: 0} : {x: 150}} // Slide in from the right
+                        initial={{opacity: 0, x: 1000}}
+                        animate={showSignupTab3 ? {opacity: 1, x: 0} : {opacity: 0, x: 150}}
                         transition={{duration: 0.5}}
                     >
                         {showSignupTab3 &&
-                            <SignupTab3 onPrevious={handlePreviousTransition1}
-                                        onContinue={handleTransition3}/>} {/* Show SignupTab2 when the state is true */}
+                            <SignupTab3
+                                onPrevious={handlePreviousTransition1}
+                                onContinue={handleTransition3}
+                                date={date}
+                                setDate={setDate}
+                                gender={gender}
+                                setGender={setGender}
+                                address={address}
+                                setAddress={setAddress}
+                                preferred_lang={preferred_lang}
+                                setLanguage={setLanguage}
+                            />}
                     </motion.div>
 
                     <motion.div
-                        initial={{x: 1000}} // Start from the right (out of view)
-                        animate={showSignupTab4 ? {x: 0} : {x: 150}} // Slide in from the right
+                        initial={{opacity: 0, x: 1000}}
+                        animate={showSignupTab4 ? {opacity: 1, x: 0} : {opacity: 0, x: 150}}
                         transition={{duration: 0.5}}
                     >
                         {showSignupTab4 &&
-                            <SignupTab4
-                                onPrevious={handlePreviousTransition2}/>} {/* Show SignupTab2 when the state is true */}
+                            <>
+                                <SignupTab4
+                                    onPrevious={handlePreviousTransition2}
+                                    company={company}
+                                    setCompany={setCompany}
+                                    job_title={job_title}
+                                    setJobTitle={setJobTitle}
+                                    industry={industry}
+                                    setIndustry={setIndustry}
+                                    experience={experience}
+                                    setExperience={setExperience}
+                                    email={email}
+                                    firstName={firstName}
+                                    lastName={lastName}
+                                    password={password}
+                                    re_password={re_password}
+                                    date={date}
+                                    gender={gender}
+                                    address={address}
+                                    preferred_lang={preferred_lang}
+                                />
+                                <Button classname={"w-full"} text="Create my Account"
+                                        onClick={handleSubmit}/>
+                            </>
+                        }
                     </motion.div>
-                </div>
+                </form>
             </div>
 
-            <div className="bg-l_light_grey h-full block max-md:hidden">
+            <div className="bg-neutral-300 h-full block max-md:hidden">
                 <h1 className="tile-marker h-full">Looping Simulation from Blender</h1>
             </div>
         </div>
     );
 };
-export default SignupScreen;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, {signup})(SignupScreen);
+

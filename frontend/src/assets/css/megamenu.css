@@ -1,0 +1,8 @@
+.menu-items li:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-items li:hover ~ .mega-container {
+    box-shadow: none !important;
+}

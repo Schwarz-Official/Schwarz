@@ -5,6 +5,9 @@ import svgrPlugin from 'vite-plugin-svgr'
 
 // see all documentation here https://vitejs.dev/config/
 export default defineConfig({
+    server: {
+      host: '0.0.0.0'
+    },
     // This changes the output dir from dist to build change as your need
     // comment this out if that isn't relevant for your project
     build: {

@@ -1,46 +1,80 @@
 import React, {useState} from "react";
 import InputField from "../../../components/InputField";
-import SubmitButton from "../../../components/SubmitButton";
+import {Button} from "../../../components/Button";
 import SelectField from "../../../components/SelectField";
+import {
+    validateAddress,
+    validateDate,
+    validateGender,
+    validateLanguage
+} from "../../../features/authentication/Validations";
 
-const SignupTab3 = ({onPrevious, onContinue}) => {
-    const [age, setAge] = useState("");
-    const [ageError, setAgeError] = useState("");
-    const [gender, setGender] = useState("");
+const SignupTab3 = ({
+                        onPrevious,
+                        onContinue,
+                        date,
+                        setDate,
+                        gender,
+                        setGender,
+                        address,
+                        setAddress,
+                        preferred_lang,
+                        setLanguage
+                    }) => {
+    const [dateError, setDateError] = useState("");
     const [genderError, setGenderError] = useState("");
-    const [address, setAddress] = useState("");
     const [addressError, setAddressError] = useState("");
-    const [language, setLanguage] = useState("");
     const [languageError, setLanguageError] = useState("");
-    const [showErrors, setShowErrors] = useState(false);
 
     const handlePrevious2Click = () => {
         onPrevious();
     }
 
-    const handleContinue3Click = () => {
-        onContinue();
+    const handleContinue3Click = (e) => {
+        e.preventDefault();
+
+        const err1 = validateDate(date);
+        const err2 = validateGender(gender);
+        const err3 = validateAddress(address);
+        const err4 = validateLanguage(preferred_lang);
+
+        setDateError(err1);
+        setGenderError(err2);
+        setAddressError(err3);
+        setLanguageError(err4);
+
+        if(err1 === "" && err2 === "" && err3 === "" && err4 === "") {
+            onContinue();
+        }
     }
 
     return (
         <div>
             <div className="relative w-[24vw] max-md:w-[60vw] items-center justify-center">
                 <InputField
-                    label="Age"
-                    type="text"
-                    placeholder="Enter your age"
-                    value={age}
-                    onChange={(event) => setAge(event.target.value)}
-                    error={ageError}
-                    showError={showErrors}
+                    label="Date of Birth"
+                    type="date"
+                    value={date}
+                    onChange={(event) => {
+                        const newDate = event.target.value;
+                        setDate(newDate);
+                        const err = validateDate(newDate);
+                        setDateError(err)
+                    }
+                    }
+                    error={dateError}
                 />
 
                 <SelectField
                     label="Gender"
                     value={gender}
-                    onChange={(event) => setGender(event.target.value)}
+                    onChange={(event) => {
+                        const newGender = event.target.value;
+                        setGender(newGender);
+                        const err = validateGender(newGender);
+                        setGenderError(err);
+                    }}
                     error={genderError}
-                    showError={showErrors}
                     options={["Man", "Woman", "Transgender", "Non-binary/non-conforming", "Prefer not to respond"]}
                     defaultOption={"Male"}
                 />
@@ -50,17 +84,25 @@ const SignupTab3 = ({onPrevious, onContinue}) => {
                     type="text"
                     placeholder="Enter your permanent address"
                     value={address}
-                    onChange={(event) => setAddress(event.target.value)}
+                    onChange={(event) => {
+                        const newAddress = event.target.value;
+                        setAddress(newAddress);
+                        const err = validateAddress(newAddress);
+                        setAddressError(err);
+                    }}
                     error={addressError}
-                    showError={showErrors}
                 />
 
                 <SelectField
                     label="Preferred Language"
-                    value={language}
-                    onChange={(event) => setLanguage(event.target.value)}
+                    value={preferred_lang}
+                    onChange={(event) => {
+                        const newLang = event.target.value;
+                        setLanguage(newLang);
+                        const err = validateLanguage(newLang);
+                        setLanguageError(err);
+                    }}
                     error={languageError}
-                    showError={showErrors}
                     options={[
                         "Afrikaans",
                         "Albanian",
@@ -205,15 +247,24 @@ const SignupTab3 = ({onPrevious, onContinue}) => {
                         "Yoruba",
                         "Zulu"
                     ]}
-                    defaultOption={"English"}
                 />
             </div>
             <br/>
-            <div className={"w-[24vw] max-md:w-[60vw] flex justify-between"}>
-                <SubmitButton classname={"w-[11vw] max-md:w-[28vw]"} text="Previous Step"
-                              onClick={handlePrevious2Click} isPreviousStep={true}/>
-                <SubmitButton classname={"w-[11vw] max-md:w-[28vw]"} text="Next Step"
-                              onClick={handleContinue3Click} isForwardStep={true}/>
+            <div className="w-[24vw] max-md:w-[60vw] flex justify-between">
+                <Button
+                    classname="w-[11vw] max-md:w-[28vw] btn"
+                    text="Previous Step"
+                    type="button"
+                    onClick={handlePrevious2Click}
+                    isPreviousStep={true}
+                />
+                <Button
+                    classname="w-[11vw] max-md:w-[28vw] btn"
+                    text="Next Step"
+                    type="button"
+                    onClick={handleContinue3Click}
+                    isForwardStep={true}
+                />
             </div>
         </div>
     );

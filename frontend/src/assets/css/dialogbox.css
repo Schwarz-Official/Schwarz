@@ -1,0 +1,22 @@
+.speech-bubble {
+  z-index: 10;
+  filter: drop-shadow(0px 2px 5px rgba(50, 50, 105, 0.15)) drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.05));
+}
+
+.speech-bubble:after {
+  z-index: 9;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 0px solid transparent;
+  border-right: 16px solid transparent;
+  border-top: 14px solid transparent;
+  border-bottom: 0;
+  border-top-color: white;
+  margin-left: -8px;
+  margin-bottom: -11px;
+  filter: drop-shadow(0px 2px 5px rgba(50, 50, 105, 0.02)) drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.02));
+}

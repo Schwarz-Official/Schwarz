@@ -1,5 +1,7 @@
 from djoser.serializers import UserCreateSerializer
 from django.contrib.auth import get_user_model
+from rest_framework import serializers
+from accounts.models import UserPreferences
 
 User = get_user_model()
 
@@ -7,10 +9,11 @@ User = get_user_model()
 class UserCreateSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = User
-        fields = ('email',
+        fields = (
+                  'email',
                   'first_name',
                   'last_name',
-                  'age',
+                  'date_of_birth',
                   'gender',
                   'address',
                   'preferred_lang',
@@ -20,3 +23,9 @@ class UserCreateSerializer(UserCreateSerializer):
                   'experience',
                   'password',
                   )
+
+
+class UserPreferencesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserPreferences
+        fields = ['dark_mode']

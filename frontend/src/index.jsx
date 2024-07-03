@@ -7,14 +7,17 @@ import './tailwind.css';
 import {Provider} from "react-redux";
 import {store} from "./app/store";
 import 'react-tooltip/dist/react-tooltip.css'
+import {PreferencesProvider} from "./contexts/PreferencesContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <Provider store={store}>
+            <PreferencesProvider>
+                <App/>
+            </PreferencesProvider>
+        </Provider>
+    </React.StrictMode>
 );
 
 reportWebVitals();
