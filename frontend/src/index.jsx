@@ -7,16 +7,16 @@ import './tailwind.css';
 import 'react-tooltip/dist/react-tooltip.css'
 import {PreferencesProvider} from "./contexts/PreferencesContext";
 
-const {RelayEnvironmentProvider} = require('react-relay');
+// const {RelayEnvironmentProvider} = require('react-relay');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <RelayEnvironmentProvider environment={environment}>
+        {/*<RelayEnvironmentProvider environment={environment}>*/}
             <PreferencesProvider>
                 <App/>
             </PreferencesProvider>
-        </RelayEnvironmentProvider>
+        {/*</RelayEnvironmentProvider>*/}
     </React.StrictMode>
 );
 
