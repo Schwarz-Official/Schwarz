@@ -4,7 +4,7 @@ import '../assets/css/button.css'
 export const Button = ({classname, text, onClick, isForwardStep, isPreviousStep, type, ...restProps}) => {
     return (
         <button
-            className={"btn btn-hover bg-black text-white flex items-center justify-center overflow-hidden rounded-xl " + classname}
+            className={`flex items-center justify-center overflow-hidden rounded-xl btn btn-hover bg-neutral-950 dark:bg-neutral-100 text-white dark:text-neutral-950 dark:font-bold ${classname}`}
             onClick={onClick}
             type={type}
             {...restProps}>

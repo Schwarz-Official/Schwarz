@@ -6,13 +6,11 @@ import SignupTab1 from "./components/SignupTab1";
 import SignupTab2 from "./components/SignupTab2";
 import SignupTab3 from "./components/SignupTab3";
 import SignupTab4 from "./components/SignupTab4";
-import {signup} from "../../services/actions/auth";
-import {connect} from "react-redux";
 import {Button} from "../../components/Button";
 import {Heading} from "../../components/Heading";
 import {SubHeading} from "../../components/SubHeading";
 
-const SignupScreen = ({signup, isAuthenticated}) => {
+const SignupScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [re_password, setRePassword] = useState("");
@@ -206,6 +204,7 @@ const SignupScreen = ({signup, isAuthenticated}) => {
         </div>
     );
 };
+
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 });

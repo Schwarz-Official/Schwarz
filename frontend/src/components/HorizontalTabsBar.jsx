@@ -62,7 +62,7 @@ export const HorizontalTabsBar = ({ classname, tabs, activeTab, setActiveTab }) 
                     onClick={scrollLeft}
                     className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white p-2 ml-2 rounded-full shadow-md"
                 >
-                    <LeftArrow width={"24px"} height={"24px"} fillColor={"#000"} />
+                    <LeftArrow width={"24px"} height={"24px"} classname={"fill-black"} />
                 </button>
             )}
             <div

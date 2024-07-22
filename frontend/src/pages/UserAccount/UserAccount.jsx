@@ -61,11 +61,11 @@ const UserAccount = ({isAuthenticated, user}) => {
         <div className={"overflow-x-hidden"}>
             <MegaMenu classname={"sticky backdrop-filter backdrop-blur-lg bg-opacity-70 firefox:bg-opacity-90 z-10"}
                       isAuthenticated={isAuthenticated} user={user}/>
-            <div className={"bg-neutral-50 flex justify-center gap-4 pt-16"}>
+            <div className={"bg-neutral-50 dark:bg-neutral-950 flex justify-center gap-4 pt-12"}>
                 <div className={"ml-4 w-1/4"}>
                     <VerticalTabsBar tabs={tabs} activeTab={activeSubTab} setActiveTab={setActiveSubTab} classname={"w-full"} />
                 </div>
-                <div className={"bg-white w-full mr-16 rounded-lg shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]"}>
+                <div className={"bg-white dark:bg-neutral-900 w-full mr-16 mb-12 rounded-lg shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]"}>
                     {(activeSubTab[0] === 0 && activeSubTab[1] === 0) && <AccountDetails user={user} />}
                 </div>
             </div>

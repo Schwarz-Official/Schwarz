@@ -57,15 +57,15 @@ const LoginScreen = ({login, isAuthenticated}) => {
     }, [isAuthenticated, navigate, from]);
 
     return (
-        <div className={"parent-container m-auto grid grid-cols-2 max-md:grid-cols-1 h-screen"}>
+        <div className={"dark:bg-neutral-900 m-auto grid grid-cols-2 max-md:grid-cols-1 h-screen"}>
             <div className={"tile h-full"}>
                 <form className={"flex flex-col items-center justify-center h-full"}>
                     <LogoIcon className="mb-4"/>
                     <Heading initial={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}
                              transition={{delay: 0.5, duration: 0.5}} text={"Welcome Back"}
-                             classname={"text-2xl max-md:text-xl text-center"}/>
+                             classname={"text-2xl max-md:text-xl text-center dark:text-neutral-200"}/>
 
-                    <SubHeading classname={"text-neutral-400 text-center"} initial={{opacity: 0, y: -20}}
+                    <SubHeading classname={"text-neutral-400 text-center dark:text-neutral-500"} initial={{opacity: 0, y: -20}}
                                 animate={{opacity: 1, y: 0}}
                                 transition={{delay: 0.8, duration: 0.5}}
                                 text={"Reconnect with your Schwarz ID for seamless access."}/>

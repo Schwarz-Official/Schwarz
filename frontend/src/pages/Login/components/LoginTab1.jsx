@@ -22,13 +22,13 @@ export const LoginTab1 = ({onContinue, email, setEmail}) => {
     return (
         <div>
             <div
-                className="relative align-center w-[24vw] max-md:w-[60vw] bg-neutral-200 mb-[32px] h-14 grid grid-cols-2 gap-2 p-1 rounded-md">
+                className="relative align-center w-[24vw] max-md:w-[60vw] bg-neutral-200 mb-[32px] h-14 grid grid-cols-2 gap-2 p-1 rounded-md dark:bg-neutral-800">
                 <button
-                    className="shadow-inner-2xl font-bold rounded-lg bg-white outline-none">Sign
+                    className="shadow-inner-2xl font-bold rounded-lg bg-white outline-none dark:bg-neutral-700 dark:text-neutral-200">Sign
                     in
                 </button>
                 <button
-                    className="text-[#636363] hover:text-black hover:shadow-inner-2xl font-bold rounded-lg transition-all ease-in-out duration-250 outline-none">Sign
+                    className="text-neutral-500 hover:text-black hover:shadow-inner-2xl font-bold rounded-lg transition-all ease-in-out duration-250 outline-none">Sign
                     up
                 </button>
             </div>
@@ -43,10 +43,10 @@ export const LoginTab1 = ({onContinue, email, setEmail}) => {
                 ))}
 
                 {/* section of ---- or ---- */}
-                <div className="flex items-center justify-items-center gap-4 mt-4">
-                    <hr className="border-gray-300 h-2 w-[10vw]"/>
+                <div className="flex items-center justify-items-center gap-4 mt-4 dark:text-neutral-100">
+                    <hr className="border-neutral-300 h-2 w-[10vw] dark:border-neutral-600"/>
                     <span>or</span>
-                    <hr className="border-gray-300 h-2 w-[10vw]"/>
+                    <hr className="border-neutral-300 h-2 w-[10vw] dark:border-neutral-600"/>
                 </div>
             </div>
 

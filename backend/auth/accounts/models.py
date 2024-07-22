@@ -135,7 +135,7 @@ class User(AbstractBaseUser):
         return self.is_admin
 
     def has_module_perms(self, app_label):
-        """Does the user have permissions to view the app `app_label`?"""
+        """Does the user have permissions to view the app app_label?"""
         # Simplest possible answer: Yes, always
         return True
 

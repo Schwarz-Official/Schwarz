@@ -1,5 +1,5 @@
 :root {
-    --btn-shadow: 1px 1px 25px 10px rgba(255, 255, 255, 0.5);
+    /*--btn-shadow: 1px 1px 25px 10px rgba(255, 255, 255, 0.5);*/
     --shine-degree: 120deg;
     --shine-color: rgba(255, 255, 255, 0.2);
     --shine-effect: linear-gradient(var(--shine-degree), transparent, var(--shine-color), transparent);
@@ -27,7 +27,6 @@
 }
 .btn-hover:hover {
     box-shadow: var(--btn-shadow);
-    background-color: #232323;
 }
 .btn-hover:hover::before {
     left: 100%;

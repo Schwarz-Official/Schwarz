@@ -24,3 +24,4 @@ yarn-error.log*
 /backend/auth/auth/secrets.py
 /frontend/.env
 /.idea
+/backend/user_profiles/.env

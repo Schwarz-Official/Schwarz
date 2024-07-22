@@ -7,35 +7,31 @@ import SignupScreen from "./pages/Signup/SignupScreen";
 import {LandingScreen} from "./pages/LandingScreen";
 import Store from "./pages/Marketplace/MarketLanding";
 import Activate from "./pages/EmailActivation/Activate";
-import Layout from "./hocs/Layout";
-import {Provider} from "react-redux";
-import {store} from "./app/store";
 import UserAccount from "./pages/UserAccount/UserAccount";
+import ArtistProfileApplicationScreen from "./pages/ArtistProfileApplication/ArtistProfileApplicationScreen";
 
 function App() {
     return (
         <div className="font-sans">
-            <Provider store={store}>
-                <Router>
-                    <Layout>
-                        <Routes>
-                            <Route exact path="/" element={<LandingScreen/>}/>
-                            <Route exact path="/login" element={<LoginForm/>}/>
-                            <Route exact path="/signup" element={<SignupScreen/>}/>
-                            <Route exact path="/auth" element={<TwofaForm/>}/>
-                            <Route exact path="/activate/:uid/:token" element={<Activate/>}/>
-                            <Route exact path="/google" element={<Otpscreen/>}/>
-                            <Route exact path="/store" element={<Store/>}/>
-                            <Route exact path="/account" element={<UserAccount/>} />
-                            {/*<Route exact path="/settings" element={<SettingsPage />} />*/}
-                            {/*<Route exact path='/facebook' components={Facebook} />*/}
-                            {/*<Route exact path='/reset-password' components={ResetPassword} />*/}
-                            {/*<Route exact path='/password/reset/confirm/:uid/:token' components={ResetPasswordConfirm} />*/}
-                            {/*<Route exact path="/register1" element={<SignupTab3 />} />*/}
-                        </Routes>
-                    </Layout>
-                </Router>
-            </Provider>
+            <Router>
+                <Routes>
+                    <Route exact path="/" element={<LandingScreen/>}/>
+                    <Route exact path="login" element={<LoginForm/>}/>
+                    <Route exact path="signup" element={<SignupScreen/>}/>
+                    <Route exact path="auth" element={<TwofaForm/>}/>
+                    <Route exact path="activate/:uid/:token" element={<Activate/>}/>
+                    <Route exact path="google" element={<Otpscreen/>}/>
+                    <Route exact path="store" element={<Store/>}/>
+                    <Route exact path="account" element={<UserAccount/>}/>
+                    <Route exact path="apply/artist" element={<ArtistProfileApplicationScreen/>}/>
+
+                    {/*<Route exact path="/settings" element={<SettingsPage />} />*/}
+                    {/*<Route exact path='/facebook' components={Facebook} />*/}
+                    {/*<Route exact path='/reset-password' components={ResetPassword} />*/}
+                    {/*<Route exact path='/password/reset/confirm/:uid/:token' components={ResetPasswordConfirm} />*/}
+                    {/*<Route exact path="/register1" element={<SignupTab3 />} />*/}
+                </Routes>
+            </Router>
 
             {/*        <div class="container">*/}
             {/*        <div class="box"></div>*/}

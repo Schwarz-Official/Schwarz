@@ -53,7 +53,7 @@ const SignupTab3 = ({
             <div className="relative w-[24vw] max-md:w-[60vw] items-center justify-center">
                 <InputField
                     label="Date of Birth"
-                    type="date"
+                    type={"date"}
                     value={date}
                     onChange={(event) => {
                         const newDate = event.target.value;
