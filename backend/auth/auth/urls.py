@@ -7,5 +7,3 @@ urlpatterns = [
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
     # path('api/', include('accounts.urls')),
 ]
-
-urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]

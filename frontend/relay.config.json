@@ -1,0 +1,5 @@
+{
+   "src": "./src",
+   "schema": "./src/graphql/schema.graphql",
+   "language": "javascript"
+}

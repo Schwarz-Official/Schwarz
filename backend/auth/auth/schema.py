@@ -9,7 +9,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from graphql_jwt.shortcuts import get_token, create_refresh_token
 from graphql_jwt.decorators import login_required
-from .models import User
+from accounts.models import User
 
 
 class UserType(DjangoObjectType):
