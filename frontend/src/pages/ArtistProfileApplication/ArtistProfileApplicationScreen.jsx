@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {MegaMenu} from "../../layouts/MegaMenu";
-import {connect} from "react-redux";
 import {Heading} from "../../components/Heading";
 import backgroundImg from "../../assets/img/background.jpg";
 import {useNavigate} from "react-router-dom";
@@ -181,9 +180,4 @@ const ArtistProfileApplicationScreen = ({isAuthenticated, user}) => {
     );
 }
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user
-});
-
-export default connect(mapStateToProps)(ArtistProfileApplicationScreen);
+export default ArtistProfileApplicationScreen;

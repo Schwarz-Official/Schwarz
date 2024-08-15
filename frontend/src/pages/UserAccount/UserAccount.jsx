@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import Texture from "../../assets/svg/texture";
 import {MegaMenu} from "../../layouts/MegaMenu";
@@ -73,9 +72,4 @@ const UserAccount = ({isAuthenticated, user}) => {
     );
 }
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user
-});
-
-export default connect(mapStateToProps)(UserAccount);
+export default UserAccount;

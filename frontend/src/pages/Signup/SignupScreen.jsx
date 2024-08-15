@@ -70,9 +70,9 @@ const SignupScreen = () => {
         }
     };
 
-    if (isAuthenticated) {
-        return navigate('/');
-    }
+    // if (isAuthenticated) {
+    //     return navigate('/');
+    // }
     if (accountCreated) {
         return navigate('/login');
     }
@@ -209,5 +209,5 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, {signup})(SignupScreen);
+export default SignupScreen;
 

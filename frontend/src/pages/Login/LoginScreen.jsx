@@ -2,8 +2,6 @@ import React, {useEffect, useState} from "react";
 import {motion} from "framer-motion";
 import {ReactComponent as LogoIcon} from "../../assets/img/Schwarz-logo.svg";
 import {useNavigate, useLocation} from "react-router-dom";
-import {login} from "../../services/actions/auth";
-import {connect} from "react-redux";
 import {Heading} from "../../components/Heading";
 import {SubHeading} from "../../components/SubHeading";
 import {LoginTab1} from "./components/LoginTab1";
@@ -111,4 +109,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, {login})(LoginScreen);
+export default LoginScreen;

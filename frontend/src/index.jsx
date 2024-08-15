@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import './tailwind.css';
 import 'react-tooltip/dist/react-tooltip.css'
 import {PreferencesProvider} from "./contexts/PreferencesContext";
-
+import {RelayEnvironmentProvider} from "react-relay";
 // const {RelayEnvironmentProvider} = require('react-relay');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -15,7 +15,6 @@ import {RigsPage} from "./components/RigsPage";
 import {AddonsPage} from "./components/AddonsPage";
 import {AnimatePresence, motion} from "framer-motion";
 import {SubHeading} from "../../components/SubHeading";
-import {connect} from "react-redux";
 import '../../assets/css/tabsbar.css'
 
 const Store = ({ isAuthenticated, user }) => {
@@ -87,9 +86,4 @@ const Store = ({ isAuthenticated, user }) => {
     );
 };
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user
-});
-
-export default connect(mapStateToProps)(Store);
+export default Store;

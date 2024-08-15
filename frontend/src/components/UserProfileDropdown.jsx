@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { PreferencesContext } from "../contexts/PreferencesContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateGradient } from "../features/userProfile/profileGradient";
-import {logout} from "../services/actions/auth";
 import Skeleton from "react-loading-skeleton";
 
 export const UserProfileDropdown = ({ first_name, last_name, email }) => {
