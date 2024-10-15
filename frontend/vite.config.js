@@ -2,6 +2,7 @@ import {defineConfig} from 'vite'
 import reactRefresh from '@vitejs/plugin-react-refresh'
 // @ts-ignore
 import svgrPlugin from 'vite-plugin-svgr'
+import relay from "vite-plugin-relay";
 
 // see all documentation here https://vitejs.dev/config/
 export default defineConfig({
@@ -21,5 +22,6 @@ export default defineConfig({
                 // ...svgr options (https://react-svgr.com/docs/options/)
             },
         }),
+        relay
     ],
 })

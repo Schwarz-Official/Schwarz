@@ -105,8 +105,4 @@ const LoginScreen = ({login, isAuthenticated}) => {
     )
 }
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
-});
-
 export default LoginScreen;

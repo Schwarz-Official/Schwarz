@@ -17,19 +17,34 @@
     "react-icons": "^5.0.1",
     "react-loading-skeleton": "^3.4.0",
     "react-phone-input-2": "^2.15.1",
+    "react-relay": "^17.0.0",
     "react-router-dom": "^6.15.0",
     "react-select": "^5.8.0",
     "react-tooltip": "^5.21.1",
+    "relay-runtime": "^17.0.0",
     "vite": "^2.9.12",
+    "vite-plugin-relay": "^2.1.0",
     "vite-plugin-svgr": "^0.3.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run relay && vite",
     "build": "rd /s /q ..\\backend\\build && tsc && vite build && xcopy build ..\\backend\\build /e /i /y",
     "serve": "vite preview",
     "test:ui": "vitest --ui --api 1337",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "relay": "relay-compiler"
+  },
+  "relay": {
+    "src": "./src/",
+    "schema": "./src/main_schema.graphql",
+    "language": "javascript",
+    "eagerEsModules": true,
+    "exclude": [
+      "**/node_modules/**",
+      "**/__mocks__/**",
+      "**/__generated__/**"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -59,7 +74,6 @@
     "relay-compiler": "^17.0.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3",
-    "vite-plugin-relay": "^2.1.0",
     "vitest": "^1.4.0"
   }
 }

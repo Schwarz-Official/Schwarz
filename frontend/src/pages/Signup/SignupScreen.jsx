@@ -9,19 +9,20 @@ import SignupTab4 from "./components/SignupTab4";
 import {Button} from "../../components/Button";
 import {Heading} from "../../components/Heading";
 import {SubHeading} from "../../components/SubHeading";
+import PropTypes from "prop-types";
 
-const SignupScreen = () => {
+const SignupScreen = ({ isAuthenticated }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [re_password, setRePassword] = useState("");
+    const [re_password, setRe_password] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [date, setDate] = useState("");
     const [gender, setGender] = useState("Man");
     const [address, setAddress] = useState("");
-    const [preferred_lang, setLanguage] = useState("English");
+    const [preferred_lang, setPreferred_lang] = useState("English");
     const [company, setCompany] = useState("");
-    const [job_title, setJobTitle] = useState("");
+    const [job_title, setJob_title] = useState("");
     const [industry, setIndustry] = useState("");
     const [experience, setExperience] = useState("");
 
@@ -70,9 +71,10 @@ const SignupScreen = () => {
         }
     };
 
-    // if (isAuthenticated) {
-    //     return navigate('/');
-    // }
+    if (isAuthenticated) {
+        return navigate('/');
+    }
+
     if (accountCreated) {
         return navigate('/login');
     }
@@ -135,7 +137,7 @@ const SignupScreen = () => {
                             password={password}
                             setPassword={setPassword}
                             re_password={re_password}
-                            setRePassword={setRePassword}
+                            setRePassword={setRe_password}
                             firstName={firstName}
                             setFirstName={setFirstName}
                             lastName={lastName}
@@ -159,7 +161,7 @@ const SignupScreen = () => {
                                 address={address}
                                 setAddress={setAddress}
                                 preferred_lang={preferred_lang}
-                                setLanguage={setLanguage}
+                                setLanguage={setPreferred_lang}
                             />}
                     </motion.div>
 
@@ -175,7 +177,7 @@ const SignupScreen = () => {
                                     company={company}
                                     setCompany={setCompany}
                                     job_title={job_title}
-                                    setJobTitle={setJobTitle}
+                                    setJobTitle={setJob_title}
                                     industry={industry}
                                     setIndustry={setIndustry}
                                     experience={experience}
@@ -205,9 +207,9 @@ const SignupScreen = () => {
     );
 };
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
-});
+SignupScreen.propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired
+}
 
 export default SignupScreen;
 
