@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "poetry-auth"
+version = "0.1.0"
+description = ""
+authors = ["Neeraj Belsare <belsareneeraj@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.2"
+boto3 = "^1.35.44"
+django-cors-headers = "^4.5.0"
+graphene-django = "^3.2.2"
+django-graphql-jwt = "^0.4.0"
+psycopg2 = "^2.9.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

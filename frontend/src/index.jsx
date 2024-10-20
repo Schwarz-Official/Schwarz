@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './tailwind.css';
 import 'react-tooltip/dist/react-tooltip.css'
-import {PreferencesProvider} from "./contexts/PreferencesContext";
+import {PreferencesProvider} from "./contexts/preferencesContext";
 import {RelayEnvironmentProvider, loadQuery} from "react-relay/hooks";
 import RelayEnvironment from "./environment";
 import {IsAuthenticatedQuery} from "./graphql/queries/IsAuthenticatedQuery";

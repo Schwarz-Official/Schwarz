@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { PreferencesContext } from "../contexts/PreferencesContext";
+import { PreferencesContext } from "../contexts/preferencesContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateGradient } from "../features/userProfile/profileGradient";
 import Skeleton from "react-loading-skeleton";
