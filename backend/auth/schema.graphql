@@ -1,22 +1,27 @@
-schema {
-  query: IsAuthenticated
-  mutation: Mutation
-}
-
-"""Exposes a URL that specifies the behaviour of this scalar."""
+"""Exposes a URL that specifies the behavior of this scalar."""
 directive @specifiedBy(
-  """The URL that specifies the behaviour of this scalar."""
+  """The URL that specifies the behavior of this scalar."""
   url: String!
 ) on SCALAR
 
-input ActivateUserInput {
-  uid: String!
-  token: String!
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+  dateOfBirth: Date!
+  gender: String!
+  address: String!
+  preferredLang: String!
+  company: String!
+  jobTitle: String!
+  industry: String!
+  experience: Int!
   clientMutationId: String
 }
 
-type ActivateUserPayload {
-  user: UserType
+type CreateUserPayload {
+  user: UserNode
   clientMutationId: String
 }
 
@@ -34,30 +39,19 @@ value as specified by
 """
 scalar DateTime
 
-type IsAuthenticated {
-  isAuthenticated: Boolean
-}
-
-input LoginInput {
-  email: String!
-  password: String!
-  clientMutationId: String
-}
-
-type LoginPayload {
-  user: UserType
-  token: String
-  refreshToken: String
-  clientMutationId: String
-}
+"""
+The `GenericScalar` scalar type represents a generic
+GraphQL scalar value that could be:
+String, Boolean, Int, Float, List or Object.
+"""
+scalar GenericScalar
 
 type Mutation {
-  register(input: RegisterInput!): RegisterPayload
-  activateUser(input: ActivateUserInput!): ActivateUserPayload
-  resendActivationEmail(input: ResendActivationEmailInput!): ResendActivationEmailPayload
-  login(input: LoginInput!): LoginPayload
-  passwordReset(input: PasswordResetInput!): PasswordResetPayload
-  passwordResetConfirm(input: PasswordResetConfirmInput!): PasswordResetConfirmPayload
+  tokenAuth(input: ObtainJSONWebTokenInput!): ObtainJSONWebTokenPayload
+  verifyToken(input: VerifyInput!): VerifyPayload
+  refreshToken(input: RefreshInput!): RefreshPayload
+  createUser(input: CreateUserInput!): CreateUserPayload
+  updatePreferences(input: UpdatePreferencesInput!): UpdatePreferencesPayload
 }
 
 """An object with an ID"""
@@ -66,60 +60,69 @@ interface Node {
   id: ID!
 }
 
-input PasswordResetConfirmInput {
-  uid: String!
-  token: String!
-  newPassword: String!
+input ObtainJSONWebTokenInput {
   clientMutationId: String
-}
-
-type PasswordResetConfirmPayload {
-  success: Boolean
-  clientMutationId: String
-}
-
-input PasswordResetInput {
-  email: String!
-  clientMutationId: String
-}
-
-type PasswordResetPayload {
-  success: Boolean
-  clientMutationId: String
-}
-
-input RegisterInput {
   email: String!
   password: String!
-  firstName: String!
-  lastName: String!
-  dateOfBirth: Date!
-  gender: String!
-  address: String!
-  preferredLang: String!
-  company: String!
-  jobTitle: String!
-  industry: String!
-  experience: Int!
+}
+
+type ObtainJSONWebTokenPayload {
+  payload: GenericScalar!
+  refreshExpiresIn: Int!
+  user: UserNode
+  clientMutationId: String
+  token: String!
+}
+
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  user(
+    """The ID of the object"""
+    id: ID!
+  ): UserNode
+  allUsers(offset: Int, before: String, after: String, first: Int, last: Int, email: String, firstName: String, lastName: String): UserNodeConnection
+  me: UserNode
+}
+
+input RefreshInput {
+  token: String
   clientMutationId: String
 }
 
-type RegisterPayload {
-  user: UserType
+type RefreshPayload {
+  payload: GenericScalar!
+  refreshExpiresIn: Int!
+  clientMutationId: String
+  token: String!
+}
+
+input UpdatePreferencesInput {
+  darkMode: Boolean!
   clientMutationId: String
 }
 
-input ResendActivationEmailInput {
-  email: String!
+type UpdatePreferencesPayload {
+  preferences: UserPreferencesNode
   clientMutationId: String
 }
 
-type ResendActivationEmailPayload {
-  success: Boolean
-  clientMutationId: String
-}
-
-type UserType implements Node {
+type UserNode implements Node {
   password: String!
   lastLogin: DateTime
 
@@ -140,5 +143,40 @@ type UserType implements Node {
   isAdmin: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
+  userpreferences: UserPreferencesNode
+}
+
+type UserNodeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [UserNodeEdge]!
+}
+
+"""A Relay edge containing a `UserNode` and its cursor."""
+type UserNodeEdge {
+  """The item at the end of the edge"""
+  node: UserNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type UserPreferencesNode implements Node {
+  """The ID of the object"""
+  id: ID!
+  user: UserNode!
+  darkMode: Boolean!
+}
+
+input VerifyInput {
+  token: String
+  clientMutationId: String
+}
+
+type VerifyPayload {
+  payload: GenericScalar!
+  clientMutationId: String
 }
 

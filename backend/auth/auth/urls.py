@@ -4,6 +4,5 @@ from django.views.generic import TemplateView
 from graphene_django.views import GraphQLView
 
 urlpatterns = [
-    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    # path('api/', include('accounts.urls')),
+    path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ]

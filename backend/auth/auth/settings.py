@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "accounts",
     "graphene_django",
+    "django_filters",
     "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
 ]
 
@@ -59,8 +60,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://localhost:5098",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -188,6 +188,7 @@ GRAPHENE = {
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ],
     'RELAY_CONNECTION_MAX_LIMIT': 1000,
+    "DEBUG": True,
 }
 
 AUTHENTICATION_BACKENDS = [
@@ -197,21 +198,8 @@ AUTHENTICATION_BACKENDS = [
 
 GRAPHQL_JWT = {
     'JWT_VERIFY_EXPIRATION': True,
-    'JWT_EXPIRATION_DELTA': timedelta(hours=1),  # Set the token expiration time
+    'JWT_EXPIRATION_DELTA': timedelta(hours=7),  # Set the token expiration time
 }
-
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '[YOUR GOOGLE OAUTH2 API KEY]'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '[YOUR GOOGLE OAUTH2 API SECRET]'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth'
-#                                                                                      '/userinfo.Profile', 'openid']
-# SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
-#
-# SOCIAL_AUTH_FACEBOOK_KEY = '[YOUR FACEBOOK API KEY]'
-# SOCIAL_AUTH_FACEBOOK_SECRET = '[YOUR FACEBOOK API SECRET]'
-# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-#     'fields': 'email, first_name, last_name'
-# }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

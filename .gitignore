@@ -1,4 +1,4 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+### Frontend
 
 # dependencies
 /frontend/node_modules
@@ -21,8 +21,23 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/backend/auth/auth/secrets.py
 /frontend/.env
 /.idea
+
+### Backend
+
+/backend/auth/auth/secrets.py
 /backend/user_profiles/.env
 /commands.txt
+
+
+### HotChocolate Fusion Gateway
+
+# .NET Core build folders
+/gateway/bin/
+/gateway/obj/
+
+# Common node modules locations
+/node_modules
+/wwwroot/node_modules
+

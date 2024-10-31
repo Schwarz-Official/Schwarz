@@ -1,26 +1,38 @@
+import logging
 import graphene
-from graphene import relay, ObjectType
+from django.utils import timezone
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
+from graphene import relay
 from graphene_django import DjangoObjectType
-from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
-from django.conf import settings
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
-from django.contrib.auth.tokens import default_token_generator
-from graphql_jwt.shortcuts import get_token, create_refresh_token
 from graphql_jwt.decorators import login_required
-from accounts.models import User
+import graphql_jwt
+from accounts.models import UserPreferences
+from django.contrib.auth import get_user_model
+from graphene_django.filter import DjangoFilterConnectionField
 
 
-class UserType(DjangoObjectType):
+User = get_user_model()
+
+
+# Relay Node for User
+class UserNode(DjangoObjectType):
     class Meta:
         model = User
+        interfaces = (relay.Node,)
         filter_fields = ['email', 'first_name', 'last_name']
+
+
+# Relay Node for User Preferences
+class UserPreferencesNode(DjangoObjectType):
+    class Meta:
+        model = UserPreferences
         interfaces = (relay.Node,)
 
 
-class Register(relay.ClientIDMutation):
-    user = graphene.Field(UserType)
+# Create User Mutation (Relay style)
+class CreateUser(relay.ClientIDMutation):
+    user = graphene.Field(UserNode)
 
     class Input:
         email = graphene.String(required=True)
@@ -36,25 +48,10 @@ class Register(relay.ClientIDMutation):
         industry = graphene.String(required=True)
         experience = graphene.Int(required=True)
 
-    @classmethod
-    def mutate_and_get_payload(cls, root, info, **kwargs):
-        email = kwargs.get('email')
-        password = kwargs.get('password')
-        first_name = kwargs.get('first_name')
-        last_name = kwargs.get('last_name')
-        date_of_birth = kwargs.get('date_of_birth')
-        gender = kwargs.get('gender')
-        address = kwargs.get('address')
-        preferred_lang = kwargs.get('preferred_lang')
-        company = kwargs.get('company')
-        job_title = kwargs.get('job_title')
-        industry = kwargs.get('industry')
-        experience = kwargs.get('experience')
-
-        if User.objects.filter(email=email).exists():
-            raise Exception("Email already in use")
-
-        user = User(
+    def mutate_and_get_payload(self, info, email, password, first_name, last_name,
+                                date_of_birth, gender, address, preferred_lang,
+                                company, job_title, industry, experience):
+        user = get_user_model()(
             email=email,
             first_name=first_name,
             last_name=last_name,
@@ -65,169 +62,59 @@ class Register(relay.ClientIDMutation):
             company=company,
             job_title=job_title,
             industry=industry,
-            experience=experience
+            experience=experience,
         )
         user.set_password(password)
-        user.is_active = False  # Deactivate account until email confirmation
         user.save()
 
-        token = default_token_generator.make_token(user)
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        activation_link = f"{settings.FRONTEND_URL}/activate/{uid}/{token}"
-
-        send_mail(
-            'Activate your account',
-            f'Activate your account by clicking the link: {activation_link}',
-            settings.DEFAULT_FROM_EMAIL,
-            [email],
-        )
-
-        return Register(user=user)
+        return CreateUser(user=user)
 
 
-class ActivateUser(relay.ClientIDMutation):
-    user = graphene.Field(UserType)
+# Update User Preferences Mutation (Relay style)
+class UpdatePreferences(relay.ClientIDMutation):
+    preferences = graphene.Field(UserPreferencesNode)
 
     class Input:
-        uid = graphene.String(required=True)
-        token = graphene.String(required=True)
+        dark_mode = graphene.Boolean(required=True)
 
-    @classmethod
-    def mutate_and_get_payload(cls, root, info, uid, token):
-        try:
-            uid = force_str(urlsafe_base64_decode(uid))
-            user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
-
-        if user is not None and default_token_generator.check_token(user, token):
-            user.is_active = True
-            user.save()
-            return ActivateUser(user=user)
-        else:
-            raise Exception('Activation link is invalid!')
-
-
-class ResendActivationEmail(relay.ClientIDMutation):
-    class Input:
-        email = graphene.String(required=True)
-
-    success = graphene.Boolean()
-
-    @classmethod
-    def mutate_and_get_payload(cls, root, info, email):
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            raise Exception("User with this email does not exist.")
-
-        if not user.is_active:
-            token = default_token_generator.make_token(user)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            activation_link = f"{settings.FRONTEND_URL}/activate/{uid}/{token}"
-
-            send_mail(
-                'Activate your account',
-                f'Activate your account by clicking the link: {activation_link}',
-                settings.DEFAULT_FROM_EMAIL,
-                [email],
-            )
-
-            return ResendActivationEmail(success=True)
-        else:
-            raise Exception("Account is already active.")
-
-
-class Login(relay.ClientIDMutation):
-    user = graphene.Field(UserType)
-    token = graphene.String()
-    refresh_token = graphene.String()
-
-    class Input:
-        email = graphene.String(required=True)
-        password = graphene.String(required=True)
-
-    @classmethod
-    def mutate_and_get_payload(cls, root, info, email, password):
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            raise Exception('Invalid credentials')
-
-        if not user.check_password(password):
-            raise Exception('Invalid credentials')
-
-        token = get_token(user)
-        refresh_token = create_refresh_token(user)
-        return Login(user=user, token=token, refresh_token=refresh_token)
-
-
-class IsAuthenticated(ObjectType):
-    is_authenticated = graphene.Boolean()
-
-    def resolve_is_authenticated(self, info):
+    @login_required
+    def mutate_and_get_payload(self, info, dark_mode):
         user = info.context.user
-        return user.is_authenticated
+        preferences, created = UserPreferences.objects.get_or_create(user=user)
+        preferences.dark_mode = dark_mode
+        preferences.save()
+
+        return UpdatePreferences(preferences=preferences)
 
 
-class PasswordReset(relay.ClientIDMutation):
-    class Input:
-        email = graphene.String(required=True)
-
-    success = graphene.Boolean()
-
-    @classmethod
-    def mutate_and_get_payload(cls, root, info, email):
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            raise Exception("User with this email does not exist.")
-
-        token = default_token_generator.make_token(user)
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        reset_link = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}"
-
-        send_mail(
-            'Password Reset',
-            f'Reset your password by clicking the link: {reset_link}',
-            settings.DEFAULT_FROM_EMAIL,
-            [email],
-        )
-
-        return PasswordReset(success=True)
-
-
-class PasswordResetConfirm(relay.ClientIDMutation):
-    class Input:
-        uid = graphene.String(required=True)
-        token = graphene.String(required=True)
-        new_password = graphene.String(required=True)
-
-    success = graphene.Boolean()
+class ObtainJSONWebToken(graphql_jwt.relay.JSONWebTokenMutation):
+    user = graphene.Field(UserNode)
 
     @classmethod
-    def mutate_and_get_payload(cls, root, info, uid, token, new_password):
-        try:
-            uid = force_str(urlsafe_base64_decode(uid))
-            user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            user = None
+    def resolve(cls, root, info, **kwargs):
+        user = info.context.user
+        user.last_login = timezone.now()
+        user.save(update_fields=['last_login'])
+        return cls(user=user)
 
-        if user is not None and default_token_generator.check_token(user, token):
-            user.set_password(new_password)
-            user.save()
-            return PasswordResetConfirm(success=True)
-        else:
-            raise Exception('Password reset link is invalid!')
+# Queries (Relay Style)
+class Query(graphene.ObjectType):
+    user = relay.Node.Field(UserNode)
+    all_users = DjangoFilterConnectionField(UserNode)
+    me = graphene.Field(UserNode)
 
-
-class Mutation(ObjectType):
-    register = Register.Field()
-    activate_user = ActivateUser.Field()
-    resend_activation_email = ResendActivationEmail.Field()
-    login = Login.Field()
-    password_reset = PasswordReset.Field()
-    password_reset_confirm = PasswordResetConfirm.Field()
+    @login_required
+    def resolve_me(self, info):
+        return info.context.user
 
 
-schema = graphene.Schema(query=IsAuthenticated, mutation=Mutation)
+# Mutations (Relay Style)
+class Mutation(graphene.ObjectType):
+    token_auth = ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.relay.Verify.Field()
+    refresh_token = graphql_jwt.relay.Refresh.Field()
+
+    create_user = CreateUser.Field()
+    update_preferences = UpdatePreferences.Field()
+
+schema = graphene.Schema(query=Query, mutation=Mutation)

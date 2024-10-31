@@ -13,7 +13,12 @@ django-cors-headers = "^4.5.0"
 graphene-django = "^3.2.2"
 django-graphql-jwt = "^0.4.0"
 psycopg2 = "^2.9.10"
+django-filter = "^24.3"
 
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.3.1"
+black = "^24.10.0"
 
 [build-system]
 requires = ["poetry-core"]
