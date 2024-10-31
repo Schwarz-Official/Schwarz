@@ -1,16 +1,12 @@
-import logging
 import graphene
-from django.utils import timezone
-from django.utils.encoding import force_str
-from django.utils.http import urlsafe_base64_decode
-from graphene import relay
-from graphene_django import DjangoObjectType
-from graphql_jwt.decorators import login_required
 import graphql_jwt
 from accounts.models import UserPreferences
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+from graphene import relay
+from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
-
+from graphql_jwt.decorators import login_required
 
 User = get_user_model()
 
@@ -20,7 +16,7 @@ class UserNode(DjangoObjectType):
     class Meta:
         model = User
         interfaces = (relay.Node,)
-        filter_fields = ['email', 'first_name', 'last_name']
+        filter_fields = ["email", "first_name", "last_name"]
 
 
 # Relay Node for User Preferences
@@ -48,9 +44,22 @@ class CreateUser(relay.ClientIDMutation):
         industry = graphene.String(required=True)
         experience = graphene.Int(required=True)
 
-    def mutate_and_get_payload(self, info, email, password, first_name, last_name,
-                                date_of_birth, gender, address, preferred_lang,
-                                company, job_title, industry, experience):
+    def mutate_and_get_payload(
+        self,
+        info,
+        email,
+        password,
+        first_name,
+        last_name,
+        date_of_birth,
+        gender,
+        address,
+        preferred_lang,
+        company,
+        job_title,
+        industry,
+        experience,
+    ):
         user = get_user_model()(
             email=email,
             first_name=first_name,
@@ -94,8 +103,9 @@ class ObtainJSONWebToken(graphql_jwt.relay.JSONWebTokenMutation):
     def resolve(cls, root, info, **kwargs):
         user = info.context.user
         user.last_login = timezone.now()
-        user.save(update_fields=['last_login'])
+        user.save(update_fields=["last_login"])
         return cls(user=user)
+
 
 # Queries (Relay Style)
 class Query(graphene.ObjectType):
@@ -116,5 +126,6 @@ class Mutation(graphene.ObjectType):
 
     create_user = CreateUser.Field()
     update_preferences = UpdatePreferences.Field()
+
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

@@ -212,4 +212,3 @@ SignupScreen.propTypes = {
 }
 
 export default SignupScreen;
-

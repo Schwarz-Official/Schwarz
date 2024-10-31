@@ -49,7 +49,7 @@ We welcome UI/UX design contributions to enhance the user experience of Schwarz.
 1. **Fork the Repository**:
    1. Navigate to the [Schwarz GitHub repository](https://github.com/Schwarz-Official/Schwarz).
    2. Click the "Fork" button in the top-right corner of the repository's page. This will create a copy of the repository in your GitHub account.
-      
+
 2. **Clone Your Fork**:
    1. Open your forked repository on GitHub (it should be at `https://github.com/your-username/Schwarz`).
    2. Click the "Code" button and copy the URL of your forked repository.
@@ -144,4 +144,4 @@ The Django server will be accessible at `http://localhost:8000`.
 
 Thank you for your contribution to Schwarz! If you have any questions or need further assistance, feel free to reach out. Happy coding! 🚀
 
---- 
+---

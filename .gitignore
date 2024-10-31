@@ -29,6 +29,14 @@ yarn-error.log*
 /backend/auth/auth/secrets.py
 /backend/user_profiles/.env
 /commands.txt
+/backend/*.log
+/backend/*.pot
+/backend/*.pyc
+/backend/auth/__pycache__/
+/backend/local_settings.py
+/backend/db.sqlite3
+db.sqlite3-journal
+media
 
 
 ### HotChocolate Fusion Gateway
@@ -40,4 +48,3 @@ yarn-error.log*
 # Common node modules locations
 /node_modules
 /wwwroot/node_modules
-
