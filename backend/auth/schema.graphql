@@ -1,0 +1,181 @@
+"""Exposes a URL that specifies the behavior of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behavior of this scalar."""
+  url: String!
+) on SCALAR
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+  dateOfBirth: Date!
+  gender: String!
+  address: String!
+  preferredLang: String!
+  company: String!
+  jobTitle: String!
+  industry: String!
+  experience: Int!
+  clientMutationId: String
+}
+
+type CreateUserPayload {
+  user: UserNode
+  clientMutationId: String
+}
+
+"""
+The `Date` scalar type represents a Date
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar Date
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+"""
+The `GenericScalar` scalar type represents a generic
+GraphQL scalar value that could be:
+String, Boolean, Int, Float, List or Object.
+"""
+scalar GenericScalar
+
+type Mutation {
+  tokenAuth(input: ObtainJSONWebTokenInput!): ObtainJSONWebTokenPayload
+  verifyToken(input: VerifyInput!): VerifyPayload
+  refreshToken(input: RefreshInput!): RefreshPayload
+  createUser(input: CreateUserInput!): CreateUserPayload
+  updatePreferences(input: UpdatePreferencesInput!): UpdatePreferencesPayload
+}
+
+"""An object with an ID"""
+interface Node {
+  """The ID of the object"""
+  id: ID!
+}
+
+input ObtainJSONWebTokenInput {
+  clientMutationId: String
+  email: String!
+  password: String!
+}
+
+type ObtainJSONWebTokenPayload {
+  payload: GenericScalar!
+  refreshExpiresIn: Int!
+  user: UserNode
+  clientMutationId: String
+  token: String!
+}
+
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  user(
+    """The ID of the object"""
+    id: ID!
+  ): UserNode
+  allUsers(offset: Int, before: String, after: String, first: Int, last: Int, email: String, firstName: String, lastName: String): UserNodeConnection
+  me: UserNode
+}
+
+input RefreshInput {
+  token: String
+  clientMutationId: String
+}
+
+type RefreshPayload {
+  payload: GenericScalar!
+  refreshExpiresIn: Int!
+  clientMutationId: String
+  token: String!
+}
+
+input UpdatePreferencesInput {
+  darkMode: Boolean!
+  clientMutationId: String
+}
+
+type UpdatePreferencesPayload {
+  preferences: UserPreferencesNode
+  clientMutationId: String
+}
+
+type UserNode implements Node {
+  password: String!
+  lastLogin: DateTime
+
+  """The ID of the object"""
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  dateOfBirth: Date!
+  gender: String!
+  address: String!
+  preferredLang: String!
+  company: String!
+  jobTitle: String!
+  industry: String!
+  experience: Int!
+  isActive: Boolean!
+  isAdmin: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  userpreferences: UserPreferencesNode
+}
+
+type UserNodeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [UserNodeEdge]!
+}
+
+"""A Relay edge containing a `UserNode` and its cursor."""
+type UserNodeEdge {
+  """The item at the end of the edge"""
+  node: UserNode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type UserPreferencesNode implements Node {
+  """The ID of the object"""
+  id: ID!
+  user: UserNode!
+  darkMode: Boolean!
+}
+
+input VerifyInput {
+  token: String
+  clientMutationId: String
+}
+
+type VerifyPayload {
+  payload: GenericScalar!
+  clientMutationId: String
+}

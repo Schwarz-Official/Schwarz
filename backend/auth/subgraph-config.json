@@ -1,0 +1,1 @@
+{"subgraph":"auth","http":{"baseAddress":"http://localhost:8000/graphql/"}}

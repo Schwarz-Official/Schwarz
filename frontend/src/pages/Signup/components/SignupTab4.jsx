@@ -8,7 +8,6 @@ import {
     validateIndustry,
     validateJobTitle
 } from "../../../features/authentication/Validations";
-import {signup} from "../../../services/actions/auth";
 
 const SignupTab4 = ({onPrevious, company, setCompany, job_title, setJobTitle, industry, setIndustry, experience, setExperience, email, firstName, lastName, password, re_password, date, gender, address, preferred_lang}) => {
     const [companyError, setCompanyError] = useState("");

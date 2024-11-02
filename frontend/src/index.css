@@ -28,3 +28,7 @@ code {
   background-color: #9ca3af;    /* color of the scroll thumb */
   border-radius: 20px;       /* roundness of the scroll thumb */
 }
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #464646;    /* color of the scroll thumb */
+}

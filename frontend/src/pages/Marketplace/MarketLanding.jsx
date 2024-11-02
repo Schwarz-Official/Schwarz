@@ -15,7 +15,6 @@ import {RigsPage} from "./components/RigsPage";
 import {AddonsPage} from "./components/AddonsPage";
 import {AnimatePresence, motion} from "framer-motion";
 import {SubHeading} from "../../components/SubHeading";
-import {connect} from "react-redux";
 import '../../assets/css/tabsbar.css'
 
 const Store = ({ isAuthenticated, user }) => {
@@ -46,17 +45,17 @@ const Store = ({ isAuthenticated, user }) => {
     return (
         <>
             <div>
-                <MegaMenu classname={"sticky backdrop-filter backdrop-blur-lg bg-opacity-70 firefox:bg-opacity-90 z-10"}
+                <MegaMenu classname={"z-10"}
                 isAuthenticated={isAuthenticated} user={user} />
                 <div className={"flex justify-between"}>
-                    <HorizontalTabsBar classname={"w-3/4 bg-neutral-50 border-b border-b-neutral-200"} tabs={tabs} activeTab={activeTab}
+                    <HorizontalTabsBar classname={"w-3/4 bg-neutral-50 dark:bg-neutral-800 border-b border-b-neutral-200 dark:border-b-neutral-600"} tabs={tabs} activeTab={activeTab}
                                        setActiveTab={setActiveTab}/>
-                    <div className={"w-1/4 bg-neutral-50 border-b border-b-neutral-200 hidden md:flex md:items-center"}>
+                    <div className={"w-1/4 bg-neutral-50 dark:bg-neutral-800 border-b border-b-neutral-200 dark:border-b-neutral-600 hidden md:flex md:items-center"}>
                         <SearchBar/>
                     </div>
                 </div>
             </div>
-            <div className={"w-full flex flex-col justify-center items-center bg-white dark:bg-neutral-500"}>
+            <div className={"w-full flex flex-col justify-center items-center"}>
                 <AnimatePresence mode={"wait"}>
                     <motion.div
                         key={tabs[activeTab].text}
@@ -65,7 +64,7 @@ const Store = ({ isAuthenticated, user }) => {
                         exit={{ opacity: 0, y: -35 }}
                         transition={{ duration: 0.25 }}
                     >
-                        <Heading text={tabs[activeTab].text} classname={"text-6xl max-md:text-3xl mt-16"} />
+                        <Heading text={tabs[activeTab].text} classname={"text-6xl max-md:text-3xl dark:text-neutral-300 mt-16"} />
                     </motion.div>
                     <motion.div
                         key={tabs[activeTab].tagline}
@@ -74,7 +73,7 @@ const Store = ({ isAuthenticated, user }) => {
                         exit={{ opacity: 0, y: -35 }}
                         transition={{ duration: 0.25, delay:0.2 }}
                     >
-                        <SubHeading text={tabs[activeTab].tagline} classname={"mt-4 mx-8 text-lg text-neutral-400 text-center"} />
+                        <SubHeading text={tabs[activeTab].tagline} classname={"mt-4 mx-8 text-lg text-neutral-400 dark:text-neutral-500 text-center"} />
                     </motion.div>
                 </AnimatePresence>
                 {tabs[activeTab].text === 'Models' && <ModelsPage />}
@@ -87,9 +86,4 @@ const Store = ({ isAuthenticated, user }) => {
     );
 };
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user
-});
-
-export default connect(mapStateToProps)(Store);
+export default Store;

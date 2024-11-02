@@ -7,55 +7,50 @@ import SignupScreen from "./pages/Signup/SignupScreen";
 import {LandingScreen} from "./pages/LandingScreen";
 import Store from "./pages/Marketplace/MarketLanding";
 import Activate from "./pages/EmailActivation/Activate";
-import Layout from "./hocs/Layout";
-import {Provider} from "react-redux";
-import {store} from "./app/store";
 import UserAccount from "./pages/UserAccount/UserAccount";
+import ArtistProfileApplicationScreen from "./pages/ArtistProfileApplication/ArtistProfileApplicationScreen";
+import {usePreloadedQuery} from "react-relay";
+import {IsAuthenticatedQuery} from "./graphql/queries/IsAuthenticatedQuery";
+import PropTypes from "prop-types";
 
-function App() {
+function App({ preloadedQuery }) {
+    const data = usePreloadedQuery(IsAuthenticatedQuery, preloadedQuery);
+
     return (
         <div className="font-sans">
-            <Provider store={store}>
-                <Router>
-                    <Layout>
-                        <Routes>
-                            <Route exact path="/" element={<LandingScreen/>}/>
-                            <Route exact path="/login" element={<LoginForm/>}/>
-                            <Route exact path="/signup" element={<SignupScreen/>}/>
-                            <Route exact path="/auth" element={<TwofaForm/>}/>
-                            <Route exact path="/activate/:uid/:token" element={<Activate/>}/>
-                            <Route exact path="/google" element={<Otpscreen/>}/>
-                            <Route exact path="/store" element={<Store/>}/>
-                            <Route exact path="/account" element={<UserAccount/>} />
-                            {/*<Route exact path="/settings" element={<SettingsPage />} />*/}
-                            {/*<Route exact path='/facebook' components={Facebook} />*/}
-                            {/*<Route exact path='/reset-password' components={ResetPassword} />*/}
-                            {/*<Route exact path='/password/reset/confirm/:uid/:token' components={ResetPasswordConfirm} />*/}
-                            {/*<Route exact path="/register1" element={<SignupTab3 />} />*/}
-                        </Routes>
-                    </Layout>
-                </Router>
-            </Provider>
+            <Router>
+                <Routes>
+                    <Route exact path="/" element={<LandingScreen/>}/>
+                    <Route exact path="login" element={<LoginForm/>}/>
+                    <Route exact path="signup" element={<SignupScreen isAuthenticated={data.isAuthenticated}/>}/>
+                    <Route exact path="auth" element={<TwofaForm/>}/>
+                    <Route exact path="activate/:uid/:token" element={<Activate/>}/>
+                    <Route exact path="google" element={<Otpscreen/>}/>
+                    <Route exact path="store" element={<Store/>}/>
+                    <Route exact path="account" element={<UserAccount/>}/>
+                    <Route exact path="apply/artist" element={<ArtistProfileApplicationScreen/>}/>
 
-            {/*        <div class="container">*/}
-            {/*        <div class="box"></div>*/}
-            {/*        <div class="box"></div>*/}
-            {/*        <div class="box"></div>*/}
-            {/*        <div class="box"></div>*/}
-            {/*        <div*/}
-            {/*  style={{*/}
-            {/*    display: 'flex',*/}
-            {/*    justifyContent: 'center',  // Horizontally center*/}
-            {/*    alignItems: 'flex-start',   // Align to the top       // 100% of the viewport height*/}
-            {/*  }}*/}
-            {/*>*/}
-            {/*  <h2 style={{ padding: '10px', marginTop: '20px', fontFamily: 'Arial, sans-serif'}}>Loading...</h2>*/}
-            {/*</div>        */}
-            {/*    </div>*/}
+                    {/*<Route exact path="/settings" element={<SettingsPage />} />*/}
+                    {/*<Route exact path='/facebook' components={Facebook} />*/}
+                    {/*<Route exact path='/reset-password' components={ResetPassword} />*/}
+                    {/*<Route exact path='/password/reset/confirm/:uid/:token' components={ResetPasswordConfirm} />*/}
+                    {/*<Route exact path="/register1" element={<SignupTab3 />} />*/}
+                </Routes>
+            </Router>
         </div>
     );
 }
 
+App.propTypes = {
+    preloadedQuery: PropTypes.shape({
+        environment: PropTypes.object.isRequired,
+        fetchKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        id: PropTypes.string,
+        isDisposed: PropTypes.bool,
+        name: PropTypes.string.isRequired,
+        variables: PropTypes.object.isRequired,
+    }).isRequired
+}
+
 
 export default App;
-

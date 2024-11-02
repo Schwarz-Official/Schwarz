@@ -28,7 +28,7 @@ export const MegaMenu = ({ classname, isAuthenticated, user }) => {
 
     return (
         <>
-            <nav className={"mega-container bg-white " + classname}>
+            <nav className={"mega-container bg-white dark:bg-neutral-800 w-full sticky backdrop-filter backdrop-blur-lg bg-opacity-40 dark:bg-opacity-60 firefox:bg-opacity-90 " + classname}>
                 <>
                     <header className="h-16 flex items-center justify-between px-4">
                         <div className="flex items-center">
@@ -38,24 +38,24 @@ export const MegaMenu = ({ classname, isAuthenticated, user }) => {
                             >
                                 <Menu width={"24px"} height={"24px"} fillColor={"#000"} />
                             </button>
-                            <Link to="/" className="no-underline font-bold text-lg uppercase flex items-center mx-6 max-md:mx-2">
+                            <Link to="/" className="flex items-center mx-6 max-md:mx-2 no-underline font-bold text-lg uppercase dark:text-neutral-100">
                                 <Logo className={"w-5 mr-4"} />
                                 Schwarz
                             </Link>
-                            <ul className={"menu-items md:flex md:flex-row items-center hidden no-underline"}>
+                            <ul className={"menu-items md:flex md:flex-row items-center hidden no-underline dark:text-neutral-100"}>
                                 <li className={"list-none transition-all ease-in-out duration-300"}>
                                     <Link to="/" className="flex justify-between w-full px-4 py-6 text-[14px]">
                                         Home
                                     </Link>
                                 </li>
                                 <li className={"cursor-pointer list-none transition-all ease-in-out duration-300"}>
-                                    <p className='flex justify-between w-full px-4 py-6 text-[14px] after:content-["_\25BE"] after:opacity-80 after:ml-[5px]'>
+                                    <p className='flex justify-between w-full px-4 py-6 text-[14px] after:content-["_\25BE"] hover:after:content-["_\25B4"] after:opacity-80 after:ml-[5px]'>
                                         Mega Menu
                                     </p>
                                     <div
-                                        className="mega-menu absolute left-0 w-screen top-[65px] border-t border-t-white opacity-0 invisible [transition:all_0.4s_ease-out_0s,_visibility_0.1s_linear_0s]">
+                                        className="mega-menu absolute left-0 w-screen top-[65px] border-t border-t-white dark:border-t-neutral-600 opacity-0 invisible [transition:all_0.4s_ease-out_0s,_visibility_0.1s_linear_0s]">
                                         <div
-                                            className="bg-gray-50 p-4 gap-4 w-full justify-between [box-shadow:rgba(0,_0,_0,_0.1)_0px_1px_3px_0px,_rgba(0,_0,_0,_0.06)_0px_1px_2px_0px]">
+                                            className="bg-gray-50 dark:bg-neutral-800 p-4 gap-4 w-full justify-between [box-shadow:rgba(0,_0,_0,_0.1)_0px_1px_3px_0px,_rgba(0,_0,_0,_0.06)_0px_1px_2px_0px]">
                                             <div className="col">
                                                 <section></section>
                                             </div>
@@ -76,16 +76,16 @@ export const MegaMenu = ({ classname, isAuthenticated, user }) => {
                         <div className="flex items-center sm:mr-12 mr-4">
                             {isAuthenticated ? (
                                 <div className={"flex items-center gap-8"}>
-                                    <Notifications height={"24px"} width={"24px"} fillColor={"#000"} className={"hidden sm:block"} />
+                                    <Notifications height={"24px"} width={"24px"} classname={"hidden sm:block dark:fill-neutral-50"} />
                                     {user && <UserProfileDropdown first_name={user.first_name} last_name={user.last_name} email={user.email} />}
                                 </div>
                             ) : (
                                 <div>
-                                    <Link to="/login" className="px-4 py-2 hover:text-blue-500 transition-all ease-in-out duration-300">
+                                    <Link to="/login" className="px-4 py-2 dark:text-neutral-100 hover:text-blue-500 transition-all ease-in-out duration-300">
                                         Login
                                     </Link>
                                     <Link to="/signup"
-                                        className="ml-4 px-4 py-2 bg-black text-white rounded-md transition-all hover:shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px] ease-in-out duration-300">
+                                        className="ml-4 px-4 py-2 bg-black dark:bg-neutral-200 text-white dark:text-black rounded-md transition-all hover:shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px] ease-in-out duration-300">
                                         Signup
                                     </Link>
                                 </div>

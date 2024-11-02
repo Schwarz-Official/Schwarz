@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import {verify} from "../../services/actions/auth";
 import {useNavigate} from "react-router-dom";
 
 const Activate = ({ verify, match }) => {
@@ -35,4 +33,4 @@ const Activate = ({ verify, match }) => {
 
 };
 
-export default connect(null, {verify})(Activate);
+export default Activate;

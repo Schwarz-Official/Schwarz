@@ -1,0 +1,78 @@
+.react-tel-input .form-control {
+    width: 100%;
+    border: 2px solid #e6e6e8;
+    border-radius: 0.75rem;
+    margin-bottom: 0.125rem;
+}
+
+.dark .react-tel-input .form-control {
+    background: #0a0a0a;
+    color: #d4d4d4;
+    border: 2px solid #262626;
+}
+
+.react-tel-input .flag-dropdown {
+    border-bottom-left-radius: 0.75rem;
+    border-top-left-radius: 0.75rem;
+}
+
+.dark .react-tel-input .flag-dropdown {
+    background-color: #171717;
+    border: 2px solid #262626;
+}
+
+.dark .react-tel-input .flag-dropdown.open{
+    z-index:2;
+    background-color: #171717;
+    border-radius:3px 0 0 0
+}
+
+.dark .react-tel-input .selected-flag:hover,.dark .react-tel-input .selected-flag:focus{
+    background-color: #171717;
+}
+
+.react-tel-input .country-list {
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+    border: 1px solid #e5e5e5;
+    border-radius:8px 8px 8px 8px;
+}
+
+.dark .react-tel-input .country-list {
+    background-color: #262626;
+    border: 1px solid #404040;
+}
+
+.dark .react-tel-input .country-list .country{
+    color: #e5e5e5;
+}
+.dark .react-tel-input .country-list .country .dial-code{
+    color:#737373;
+}
+.dark .react-tel-input .country-list .country:hover{
+    background-color: #171717;
+}
+.dark .react-tel-input .country-list .country.highlight{
+    background-color: #0a0a0a;
+}
+.react-tel-input .country-list .flag{
+    margin-right:7px;
+    margin-top:2px
+}
+
+.react-tel-input .country-list .search{
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.dark .react-tel-input .country-list .search{
+    background-color: #171717;
+    border-bottom: 1px solid #525252;
+}
+
+.dark .react-tel-input .country-list .search-box{
+    background-color: #0a0a0a;
+    border:1px solid #525252;
+    color: #737373;
+    border-radius:6px;
+    font-style:normal;
+}

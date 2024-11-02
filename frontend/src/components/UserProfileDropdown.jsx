@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { PreferencesContext } from "../contexts/PreferencesContext";
+import { PreferencesContext } from "../contexts/preferencesContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateGradient } from "../features/userProfile/profileGradient";
-import {logout} from "../services/actions/auth";
 import Skeleton from "react-loading-skeleton";
 
 export const UserProfileDropdown = ({ first_name, last_name, email }) => {
@@ -60,13 +59,13 @@ export const UserProfileDropdown = ({ first_name, last_name, email }) => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 50 }}
                         transition={{ duration: 0.3 }}
-                        className="absolute right-0 mt-2 w-56 bg-white border rounded-lg shadow-lg"
+                        className="absolute right-0 mt-2 w-56 bg-white dark:bg-neutral-800 dark:text-neutral-200 border dark:border-neutral-700 rounded-lg shadow-lg"
                     >
                         <div className="p-4">
-                            <p><b>{first_name} {last_name}</b></p>
-                            <p className="text-sm text-gray-400">{email}</p>
+                            <p className={"dark:text-neutral-200"}><b>{first_name} {last_name}</b></p>
+                            <p className="text-sm text-neutral-400">{email}</p>
                         </div>
-                        <hr />
+                        <hr className={"dark:border-neutral-700"} />
                         <div className="flex flex-col w-full my-4">
                             <Link className="px-4 py-2 flex" aria-current="page" to="/account">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -95,11 +94,11 @@ export const UserProfileDropdown = ({ first_name, last_name, email }) => {
                             </div>
                             <label className="relative inline-flex cursor-pointer">
                                 <input type="checkbox" value="" className="sr-only peer" checked={darkMode} onChange={toggleDarkMode} />
-                                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-400 dark:peer-checked:bg-blue-600"></div>
                             </label>
                         </div>
                     </div>
-                    <hr />
+                    <hr className={"dark:border-neutral-700"} />
                     <div className="flex flex-col my-2 text-rose-500">
                         <div className="px-4 py-2 flex cursor-pointer" aria-current="page">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}

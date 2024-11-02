@@ -1,25 +1,25 @@
 import uuid
 
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 
 #  Custom User Manager
 class UserManager(BaseUserManager):
     def create_user(
-            self,
-            email,
-            first_name,
-            last_name,
-            date_of_birth,
-            gender,
-            address,
-            preferred_lang,
-            company,
-            job_title,
-            industry,
-            experience,
-            password=None,
+        self,
+        email,
+        first_name,
+        last_name,
+        date_of_birth,
+        gender,
+        address,
+        preferred_lang,
+        company,
+        job_title,
+        industry,
+        experience,
+        password=None,
     ):
         """
         Creates and saves a User with the given email, name, tc and password.
@@ -46,19 +46,19 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(
-            self,
-            email,
-            first_name,
-            last_name,
-            date_of_birth,
-            gender,
-            address,
-            preferred_lang,
-            company,
-            job_title,
-            industry,
-            experience,
-            password=None,
+        self,
+        email,
+        first_name,
+        last_name,
+        date_of_birth,
+        gender,
+        address,
+        preferred_lang,
+        company,
+        job_title,
+        industry,
+        experience,
+        password=None,
     ):
         """
         Creates and saves a superuser with the given email, name, tc and password.
@@ -85,10 +85,7 @@ class UserManager(BaseUserManager):
 #  Custom User Model
 class User(AbstractBaseUser):
     id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False,
-        unique=True
+        primary_key=True, default=uuid.uuid4, editable=False, unique=True
     )
     email = models.EmailField(
         verbose_name="Email",
@@ -135,7 +132,7 @@ class User(AbstractBaseUser):
         return self.is_admin
 
     def has_module_perms(self, app_label):
-        """Does the user have permissions to view the app `app_label`?"""
+        """Does the user have permissions to view the app app_label?"""
         # Simplest possible answer: Yes, always
         return True
 
@@ -146,28 +143,9 @@ class User(AbstractBaseUser):
         return self.is_admin
 
 
-class Module(models.Model):
-    name = models.CharField(max_length=50)
-
-
-class Permission(models.Model):
-    name = models.CharField(max_length=50)
-    module = models.ForeignKey(Module, on_delete=models.CASCADE)
-
-
-class Role(models.Model):
-    name = models.CharField(max_length=50)
-    permissions = models.ManyToManyField(Permission)
-
-
-class UserRole(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True)
-
-
 class UserPreferences(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     dark_mode = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name} Preferences'
+        return f"{self.user.first_name} {self.user.last_name} Preferences"
