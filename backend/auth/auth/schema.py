@@ -4,6 +4,8 @@ from accounts.models import UserPreferences
 from auth import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
+from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils import timezone
@@ -121,8 +123,17 @@ class RequestPasswordReset(relay.ClientIDMutation):
     errors = graphene.List(graphene.String)
 
     @classmethod
+    def rate_limit_check(cls, email):
+        cache_key = f"password_reset_{email}"
+        if cache.get(cache_key):
+            raise ValidationError("Please wait before requesting another reset email.")
+        cache.set(cache_key, True, 300)  # 5 minutes cooldown
+
+    @classmethod
     def mutate_and_get_payload(cls, root, info, email):
         try:
+            cls.rate_limit_check(email)
+
             user = User.objects.get(email=email)
 
             # Generate password reset token
@@ -154,6 +165,8 @@ class RequestPasswordReset(relay.ClientIDMutation):
         except User.DoesNotExist:
             # Return success even if user doesn't exist (security best practice)
             return cls(success=True, errors=None)
+        except ValidationError as e:
+            return cls(success=False, errors=[str(e)])
         except Exception as e:
             return cls(success=False, errors=[str(e)])
 
@@ -229,7 +242,7 @@ class ResetPassword(relay.ClientIDMutation):
             return cls(success=False, errors=[str(e)])
 
 
-# Queries (Relay Style)
+# Queries
 class Query(graphene.ObjectType):
     user = relay.Node.Field(UserNode)
     all_users = DjangoFilterConnectionField(UserNode)
@@ -240,7 +253,7 @@ class Query(graphene.ObjectType):
         return info.context.user
 
 
-# Mutations (Relay Style)
+# Mutations
 class Mutation(graphene.ObjectType):
     token_auth = ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.relay.Verify.Field()
