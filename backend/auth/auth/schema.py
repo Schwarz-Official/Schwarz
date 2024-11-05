@@ -1,20 +1,20 @@
 import graphene
 import graphql_jwt
+from accounts.models import UserPreferences
+from auth import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
+from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-
-from accounts.models import UserPreferences
-from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from graphene import relay
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 from graphql_jwt.decorators import login_required
-
-from auth import settings
 
 User = get_user_model()
 
@@ -123,8 +123,17 @@ class RequestPasswordReset(relay.ClientIDMutation):
     errors = graphene.List(graphene.String)
 
     @classmethod
+    def rate_limit_check(cls, email):
+        cache_key = f"password_reset_{email}"
+        if cache.get(cache_key):
+            raise ValidationError("Please wait before requesting another reset email.")
+        cache.set(cache_key, True, 300)  # 5 minutes cooldown
+
+    @classmethod
     def mutate_and_get_payload(cls, root, info, email):
         try:
+            cls.rate_limit_check(email)
+
             user = User.objects.get(email=email)
 
             # Generate password reset token
@@ -136,15 +145,15 @@ class RequestPasswordReset(relay.ClientIDMutation):
 
             # Render email template
             context = {
-                'user': user,
-                'reset_url': reset_url,
-                'site_name': settings.SITE_NAME
+                "user": user,
+                "reset_url": reset_url,
+                "site_name": settings.SITE_NAME,
             }
-            email_body = render_to_string('password_reset_email.html', context)
+            email_body = render_to_string("password_reset_email.html", context)
 
             # Send email
             send_mail(
-                subject='Password Reset Request',
+                subject="Password Reset Request",
                 message=email_body,
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[user.email],
@@ -156,8 +165,11 @@ class RequestPasswordReset(relay.ClientIDMutation):
         except User.DoesNotExist:
             # Return success even if user doesn't exist (security best practice)
             return cls(success=True, errors=None)
+        except ValidationError as e:
+            return cls(success=False, errors=[str(e)])
         except Exception as e:
             return cls(success=False, errors=[str(e)])
+
 
 class ValidatePasswordResetToken(relay.ClientIDMutation):
     class Input:
@@ -178,10 +190,11 @@ class ValidatePasswordResetToken(relay.ClientIDMutation):
             if default_token_generator.check_token(user, token):
                 return cls(success=True, errors=None)
             else:
-                return cls(success=False, errors=['Invalid or expired token'])
+                return cls(success=False, errors=["Invalid or expired token"])
 
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            return cls(success=False, errors=['Invalid reset link'])
+            return cls(success=False, errors=["Invalid reset link"])
+
 
 class ResetPassword(relay.ClientIDMutation):
     class Input:
@@ -194,15 +207,20 @@ class ResetPassword(relay.ClientIDMutation):
     errors = graphene.List(graphene.String)
 
     @classmethod
-    def mutate_and_get_payload(cls, root, info, token, uidb64, new_password, confirm_password):
+    def mutate_and_get_payload(
+        cls, root, info, token, uidb64, new_password, confirm_password
+    ):
         try:
             # Validate passwords match
             if new_password != confirm_password:
-                return cls(success=False, errors=['Passwords do not match'])
+                return cls(success=False, errors=["Passwords do not match"])
 
             # Validate password complexity
             if len(new_password) < 8:
-                return cls(success=False, errors=['Password must be at least 8 characters long'])
+                return cls(
+                    success=False,
+                    errors=["Password must be at least 8 characters long"],
+                )
 
             # Decode the uidb64 to get the user's ID
             uid = force_str(urlsafe_base64_decode(uidb64))
@@ -210,7 +228,7 @@ class ResetPassword(relay.ClientIDMutation):
 
             # Validate token
             if not default_token_generator.check_token(user, token):
-                return cls(success=False, errors=['Invalid or expired token'])
+                return cls(success=False, errors=["Invalid or expired token"])
 
             # Set new password
             user.set_password(new_password)
@@ -219,12 +237,12 @@ class ResetPassword(relay.ClientIDMutation):
             return cls(success=True, errors=None)
 
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            return cls(success=False, errors=['Invalid reset link'])
+            return cls(success=False, errors=["Invalid reset link"])
         except Exception as e:
             return cls(success=False, errors=[str(e)])
 
 
-# Queries (Relay Style)
+# Queries
 class Query(graphene.ObjectType):
     user = relay.Node.Field(UserNode)
     all_users = DjangoFilterConnectionField(UserNode)
@@ -235,7 +253,7 @@ class Query(graphene.ObjectType):
         return info.context.user
 
 
-# Mutations (Relay Style)
+# Mutations
 class Mutation(graphene.ObjectType):
     token_auth = ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.relay.Verify.Field()
