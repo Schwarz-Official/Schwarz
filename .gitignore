@@ -24,9 +24,11 @@ yarn-error.log*
 /frontend/.env
 /.idea
 
-### Backend
+### Backend - auth microservice
 
-/backend/auth/auth/secrets.py
+/backend/auth/.env
+/backend/scripts/fetch_secrets.py
+
 /backend/user_profiles/.env
 /commands.txt
 /backend/*.log
