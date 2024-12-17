@@ -11,6 +11,7 @@
     <PackageReference Include="HotChocolate.AspNetCore" Version="14.0.0" />
     <PackageReference Include="HotChocolate.AspNetCore.CommandLine" Version="14.0.0" />
     <PackageReference Include="HotChocolate.Fusion" Version="14.0.0" />
+    <PackageReference Include="HotChocolate.Types.Scalars" Version="14.2.0" />
   </ItemGroup>
 
 </Project>
