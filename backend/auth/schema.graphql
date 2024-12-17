@@ -50,6 +50,9 @@ type Mutation {
   tokenAuth(input: ObtainJSONWebTokenInput!): ObtainJSONWebTokenPayload
   verifyToken(input: VerifyInput!): VerifyPayload
   refreshToken(input: RefreshInput!): RefreshPayload
+  requestPasswordReset(input: RequestPasswordResetInput!): RequestPasswordResetPayload
+  validateResetToken(input: ValidatePasswordResetTokenInput!): ValidatePasswordResetTokenPayload
+  resetPassword(input: ResetPasswordInput!): ResetPasswordPayload
   createUser(input: CreateUserInput!): CreateUserPayload
   updatePreferences(input: UpdatePreferencesInput!): UpdatePreferencesPayload
 }
@@ -112,6 +115,31 @@ type RefreshPayload {
   token: String!
 }
 
+input RequestPasswordResetInput {
+  email: String!
+  clientMutationId: String
+}
+
+type RequestPasswordResetPayload {
+  success: Boolean
+  errors: [String]
+  clientMutationId: String
+}
+
+input ResetPasswordInput {
+  token: String!
+  uidb64: String!
+  newPassword: String!
+  confirmPassword: String!
+  clientMutationId: String
+}
+
+type ResetPasswordPayload {
+  success: Boolean
+  errors: [String]
+  clientMutationId: String
+}
+
 input UpdatePreferencesInput {
   darkMode: Boolean!
   clientMutationId: String
@@ -170,6 +198,18 @@ type UserPreferencesNode implements Node {
   darkMode: Boolean!
 }
 
+input ValidatePasswordResetTokenInput {
+  token: String!
+  uidb64: String!
+  clientMutationId: String
+}
+
+type ValidatePasswordResetTokenPayload {
+  success: Boolean
+  errors: [String]
+  clientMutationId: String
+}
+
 input VerifyInput {
   token: String
   clientMutationId: String
@@ -179,3 +219,4 @@ type VerifyPayload {
   payload: GenericScalar!
   clientMutationId: String
 }
+
