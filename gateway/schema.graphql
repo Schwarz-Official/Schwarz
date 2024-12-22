@@ -1,60 +1,66 @@
-"""Exposes a URL that specifies the behavior of this scalar."""
+"""
+The purpose of the `cost` directive is to define a `weight` for GraphQL types,
+fields, and arguments. Static analysis can use these weights when calculating
+the overall cost of a query or response.
+"""
+directive @cost(
+  """
+  The `weight` argument defines what value to add to the overall cost for every
+  appearance, or possible appearance, of a type, field, argument, etc.
+  """
+  weight: String!
+) on SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM | INPUT_FIELD_DEFINITION
+
+"""
+The `@specifiedBy` directive is used within the type system definition language
+to provide a URL for specifying the behavior of custom scalar definitions.
+"""
 directive @specifiedBy(
-  """The URL that specifies the behavior of this scalar."""
+  """
+  The specifiedBy URL points to a human-readable specification. This field will only read a result for scalar types.
+  """
   url: String!
 ) on SCALAR
 
 input CreateUserInput {
-  email: String!
-  password: String!
-  firstName: String!
-  lastName: String!
-  dateOfBirth: Date!
-  gender: String!
   address: String!
-  preferredLang: String!
-  company: String!
-  jobTitle: String!
-  industry: String!
-  experience: Int!
   clientMutationId: String
+  company: String!
+  dateOfBirth: Date!
+  email: String!
+  experience: Int!
+  firstName: String!
+  gender: String!
+  industry: String!
+  jobTitle: String!
+  lastName: String!
+  password: String!
+  preferredLang: String!
 }
 
 type CreateUserPayload {
-  user: UserNode
   clientMutationId: String
+  user: UserNode
 }
 
-"""
-The `Date` scalar type represents a Date
-value as specified by
-[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
-"""
+"""The `Date` scalar represents an ISO-8601 compliant date type."""
 scalar Date
 
-"""
-The `DateTime` scalar type represents a DateTime
-value as specified by
-[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
-"""
+"""The `DateTime` scalar represents an ISO-8601 compliant date time type."""
 scalar DateTime
 
-"""
-The `GenericScalar` scalar type represents a generic
-GraphQL scalar value that could be:
-String, Boolean, Int, Float, List or Object.
-"""
+"""A generic scalar type that can handle various object types"""
 scalar GenericScalar
 
 type Mutation {
-  tokenAuth(input: ObtainJSONWebTokenInput!): ObtainJSONWebTokenPayload
-  verifyToken(input: VerifyInput!): VerifyPayload
+  createUser(input: CreateUserInput!): CreateUserPayload
   refreshToken(input: RefreshInput!): RefreshPayload
   requestPasswordReset(input: RequestPasswordResetInput!): RequestPasswordResetPayload
-  validateResetToken(input: ValidatePasswordResetTokenInput!): ValidatePasswordResetTokenPayload
   resetPassword(input: ResetPasswordInput!): ResetPasswordPayload
-  createUser(input: CreateUserInput!): CreateUserPayload
+  tokenAuth(input: ObtainJSONWebTokenInput!): ObtainJSONWebTokenPayload
   updatePreferences(input: UpdatePreferencesInput!): UpdatePreferencesPayload
+  validateResetToken(input: ValidatePasswordResetTokenInput!): ValidatePasswordResetTokenPayload
+  verifyToken(input: VerifyInput!): VerifyPayload
 }
 
 """An object with an ID"""
@@ -70,17 +76,20 @@ input ObtainJSONWebTokenInput {
 }
 
 type ObtainJSONWebTokenPayload {
+  clientMutationId: String
   payload: GenericScalar!
   refreshExpiresIn: Int!
-  user: UserNode
-  clientMutationId: String
   token: String!
+  user: UserNode
 }
 
 """
 The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
 """
 type PageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
   """When paginating forwards, are there more items?"""
   hasNextPage: Boolean!
 
@@ -89,134 +98,133 @@ type PageInfo {
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
-
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
 }
 
 type Query {
+  allUsers(after: String, before: String, email: String, first: Int, firstName: String, last: Int, lastName: String, offset: Int): UserNodeConnection
+  isAuthenticated: Boolean
+  me: UserNode
   user(
     """The ID of the object"""
     id: ID!
   ): UserNode
-  allUsers(offset: Int, before: String, after: String, first: Int, last: Int, email: String, firstName: String, lastName: String): UserNodeConnection
-  me: UserNode
 }
 
 input RefreshInput {
-  token: String
   clientMutationId: String
+  token: String
 }
 
 type RefreshPayload {
+  clientMutationId: String
   payload: GenericScalar!
   refreshExpiresIn: Int!
-  clientMutationId: String
   token: String!
 }
 
 input RequestPasswordResetInput {
-  email: String!
   clientMutationId: String
+  email: String!
 }
 
 type RequestPasswordResetPayload {
-  success: Boolean
-  errors: [String]
   clientMutationId: String
+  errors: [String]
+  success: Boolean
 }
 
 input ResetPasswordInput {
+  clientMutationId: String
+  confirmPassword: String!
+  newPassword: String!
   token: String!
   uidb64: String!
-  newPassword: String!
-  confirmPassword: String!
-  clientMutationId: String
 }
 
 type ResetPasswordPayload {
-  success: Boolean
-  errors: [String]
   clientMutationId: String
+  errors: [String]
+  success: Boolean
 }
 
 input UpdatePreferencesInput {
-  darkMode: Boolean!
   clientMutationId: String
+  darkMode: Boolean!
 }
 
 type UpdatePreferencesPayload {
-  preferences: UserPreferencesNode
   clientMutationId: String
+  preferences: UserPreferencesNode
 }
 
 type UserNode implements Node {
-  password: String!
-  lastLogin: DateTime
+  address: String!
+  company: String!
+  createdAt: DateTime!
+  dateOfBirth: Date!
+  email: String!
+  experience: Int!
+  firstName: String!
+  gender: String!
 
   """The ID of the object"""
   id: ID!
-  email: String!
-  firstName: String!
-  lastName: String!
-  dateOfBirth: Date!
-  gender: String!
-  address: String!
-  preferredLang: String!
-  company: String!
-  jobTitle: String!
   industry: String!
-  experience: Int!
   isActive: Boolean!
   isAdmin: Boolean!
-  createdAt: DateTime!
+  jobTitle: String!
+  lastLogin: DateTime
+  lastName: String!
+  password: String!
+  preferredLang: String!
   updatedAt: DateTime!
   userpreferences: UserPreferencesNode
 }
 
 type UserNodeConnection {
-  """Pagination data for this connection."""
-  pageInfo: PageInfo!
-
   """Contains the nodes in this connection."""
   edges: [UserNodeEdge]!
+
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
 }
 
 """A Relay edge containing a `UserNode` and its cursor."""
 type UserNodeEdge {
-  """The item at the end of the edge"""
-  node: UserNode
-
   """A cursor for use in pagination"""
   cursor: String!
+
+  """The item at the end of the edge"""
+  node: UserNode
 }
 
 type UserPreferencesNode implements Node {
+  darkMode: Boolean!
+
   """The ID of the object"""
   id: ID!
   user: UserNode!
-  darkMode: Boolean!
 }
 
 input ValidatePasswordResetTokenInput {
+  clientMutationId: String
   token: String!
   uidb64: String!
-  clientMutationId: String
 }
 
 type ValidatePasswordResetTokenPayload {
-  success: Boolean
-  errors: [String]
   clientMutationId: String
+  errors: [String]
+  success: Boolean
 }
 
 input VerifyInput {
-  token: String
   clientMutationId: String
+  token: String
 }
 
 type VerifyPayload {
-  payload: GenericScalar!
   clientMutationId: String
+  payload: GenericScalar!
 }
 

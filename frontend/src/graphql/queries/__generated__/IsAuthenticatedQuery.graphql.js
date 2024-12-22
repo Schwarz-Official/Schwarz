@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3e93cfe3322dee95bd7e689c32922a6>>
+ * @generated SignedSource<<8e03c8d9e04e033abcd024f5cb098f7c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,7 @@ return {
     "metadata": null,
     "name": "IsAuthenticatedQuery",
     "selections": (v0/*: any*/),
-    "type": "IsAuthenticated",
+    "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",

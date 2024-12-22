@@ -247,10 +247,15 @@ class Query(graphene.ObjectType):
     user = relay.Node.Field(UserNode)
     all_users = DjangoFilterConnectionField(UserNode)
     me = graphene.Field(UserNode)
+    is_authenticated = graphene.Boolean()
 
     @login_required
     def resolve_me(self, info):
         return info.context.user
+
+    def resolve_is_authenticated(self, info):
+        # Check if the user is authenticated
+        return info.context.user.is_authenticated
 
 
 # Mutations

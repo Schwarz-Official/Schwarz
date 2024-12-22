@@ -4,13 +4,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient("Fusion");
 
+// Configure CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("http://localhost:3000");
-                      });
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
 });
 
 // Register your custom scalars
@@ -24,6 +28,10 @@ builder.Services
 
 var app = builder.Build();
 
+// Use the CORS middleware
+app.UseCors(MyAllowSpecificOrigins);
+
+// Map the GraphQL endpoint
 app.MapGraphQL();
 
 app.RunWithGraphQLCommands(args);
